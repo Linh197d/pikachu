@@ -25,7 +25,7 @@ import javax.swing.border.LineBorder;
 
 /**
  *
- * @author 
+ * @author Hungdim
  */
 public class ButtonEvent extends JPanel implements ActionListener {
 
