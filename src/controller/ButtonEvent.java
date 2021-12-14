@@ -89,7 +89,30 @@ public class ButtonEvent extends JPanel implements ActionListener {
         return icon;
 
     }
-
+    public void changePosition() { // random 
+        for (int i = 1; i < row - 1; i++) {
+            for (int j = 1; j < col - 1; j++) {
+                setDisable(btn[i][j]);
+            }
+        }
+        this.removeAll();
+        algorithm.newRandMap();
+//        btn = new JButton[row][col];
+        for (int i = 1; i < row - 1; i++) {
+            for (int j = 1; j < col - 1; j++) {
+                if (algorithm.getMatrix()[i][j] != 0) {
+                    btn[i][j] = createButton(i + "," + j);
+                    Icon icon = getIcon(algorithm.getMatrix()[i][j]);
+                    btn[i][j].setIcon(icon);
+                    add(btn[i][j]);
+                } else {
+                    btn[i][j] = createButton(i + "," + j);
+                    add(btn[i][j]);
+                    setDisable(btn[i][j]);
+                }
+            }
+        }
+    }
     private JButton createButton(String action) {
         JButton btn = new JButton();
         btn.setActionCommand(action);

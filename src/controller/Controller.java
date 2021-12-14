@@ -22,6 +22,7 @@ public class Controller {
     private int col;
     private int[][] matrix;
     MainForm1 frame;
+    private ArrayList<Integer> listIcon = new ArrayList<>(); // array luu mang cac Icon
 
     public Controller( MainForm1 frame,int row, int col) {//MainFrame frame,
         this.frame = frame;
@@ -297,6 +298,7 @@ public class Controller {
                         matrix[listPoint.get(pointIndex).x][listPoint
                                 .get(pointIndex).y] = index;
                         listPoint.remove(pointIndex);
+                        listIcon.add(index);
                     } catch (Exception e) {
                     }
                 }
@@ -304,7 +306,33 @@ public class Controller {
             }
         } while (i < row * col / 2);
     }
+public void newRandMap() { // ma tran moi khi random
+        Random rand = new Random();
+        ArrayList<Integer> tempListIcon = new ArrayList<>();
+        
+        for(int i =0; i<listIcon.size(); i++){
+        tempListIcon.add(listIcon.get(i));
+        }
+        System.out.println("row" + row + " col" + col);
+        for (int i = 1; i < row -1; i++) {
 
+            for (int j = 1; j < col -1; j++) {
+
+                if (matrix[i][j] != 0) {
+                    int randIndex = rand.nextInt(tempListIcon.size());
+                    matrix[i][j] = tempListIcon.get(randIndex);
+                    tempListIcon.remove(randIndex);
+                }
+
+            }
+
+        }
+      
+        showMatrix();
+    }
+   public ArrayList<Integer> getListIcon() {
+        return listIcon;
+    }
     public int getRow() {
         return row;
     }

@@ -24,12 +24,14 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     private boolean resume = false;
     private int maxTime = 300;
     public int time = maxTime;
+      public int swap = 5;
 
     /**
      * Creates new form MainForm
      */
     public MainForm1() {
         initComponents();
+                lblSwap.setText("" + swap);
         createGraphicsPanel();
     
     }
@@ -111,6 +113,11 @@ private JPanel createGraphicsPanel() {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setText("SWAP");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 73, 31));
 
         lblSwap.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -134,6 +141,16 @@ private JPanel createGraphicsPanel() {
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
             System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (swap > 0) {
+            graphicsPanel.changePosition();
+            swap--;
+            lblSwap.setText(""+swap);
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
