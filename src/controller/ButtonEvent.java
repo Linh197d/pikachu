@@ -13,15 +13,12 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-
-
 
 /**
  *
@@ -43,9 +40,8 @@ public class ButtonEvent extends JPanel implements ActionListener {
     private MainForm1 frame;
     private Color backGroundColor = Color.lightGray;
     private int item;
-    
 
-    public ButtonEvent( MainForm1 frame,int row, int col) {
+    public ButtonEvent(MainForm1 frame, int row, int col) {
         this.frame = frame;
         this.row = row + 2;
         this.col = col + 2;
@@ -63,7 +59,7 @@ public class ButtonEvent extends JPanel implements ActionListener {
     }
 
     public void newGame() {
-        algorithm = new Controller( this.frame, this.row, this.col);
+        algorithm = new Controller(this.frame, this.row, this.col);
         addArrayButton();
 
     }
@@ -89,6 +85,7 @@ public class ButtonEvent extends JPanel implements ActionListener {
         return icon;
 
     }
+
     public void changePosition() { // random 
         for (int i = 1; i < row - 1; i++) {
             for (int j = 1; j < col - 1; j++) {
@@ -113,6 +110,7 @@ public class ButtonEvent extends JPanel implements ActionListener {
             }
         }
     }
+
     private JButton createButton(String action) {
         JButton btn = new JButton();
         btn.setActionCommand(action);
@@ -150,7 +148,17 @@ public class ButtonEvent extends JPanel implements ActionListener {
                     + p2.x + "," + p2.y + ")");
             line = algorithm.checkTwoPoint(p1, p2);
             if (line != null) {
+                 int iconRemove = algorithm.getMatrix()[p1.x][p1.y];
                 System.out.println("line != null");
+                for (int i = 0; i < algorithm.getListIcon().size(); i++) {
+
+                    if (algorithm.getListIcon().get(i) == iconRemove) {
+                        System.out.println(i);
+                        algorithm.getListIcon().remove(i);
+                        algorithm.getListIcon().remove(i);
+                        break;
+                    }
+                }
                 algorithm.getMatrix()[p1.x][p1.y] = 0;
                 algorithm.getMatrix()[p2.x][p2.y] = 0;
                 algorithm.showMatrix();
@@ -166,10 +174,10 @@ public class ButtonEvent extends JPanel implements ActionListener {
             p2 = null;
             System.out.println("done");
             if (item == 0) {
-                
+
                 if (frame.showDialogNewGame(
                         "You are winer!\nDo you want play again?", "Win", 1) == true) {
-                    
+
                 };
             }
         }
