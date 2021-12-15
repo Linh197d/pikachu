@@ -127,7 +127,7 @@ public class ButtonEvent extends JPanel implements ActionListener {
 
     private void setDisable(JButton btn) {
         btn.setIcon(null);
-        btn.setBackground(backGroundColor);//backGroundColor
+        btn.setBackground(backGroundColor);
         btn.setVisible(false);
         btn.setEnabled(false);
     }

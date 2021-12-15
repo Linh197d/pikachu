@@ -35,8 +35,8 @@ public class Controller {
 
     // show matrix
     public void showMatrix() {
-        for (int i = 1; i < row - 1; i++) {
-            for (int j = 1; j < col - 1; j++) {
+        for (int i = 0; i <= row - 1; i++) {
+            for (int j = 0; j <= col - 1; j++) {
                 System.out.printf("%3d", matrix[i][j]);
             }
             System.out.println();
