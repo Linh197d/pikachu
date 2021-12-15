@@ -148,9 +148,9 @@ public class ButtonEvent extends JPanel implements ActionListener {
                     + p2.x + "," + p2.y + ")");
             line = algorithm.checkTwoPoint(p1, p2);
             if (line != null) {
-                 int iconRemove = algorithm.getMatrix()[p1.x][p1.y];
+                 int iconRemove = algorithm.getMatrix()[p1.x][p1.y]; // remove icon ra khoi mang list Icon
                 System.out.println("line != null");
-                for (int i = 0; i < algorithm.getListIcon().size(); i++) {
+                for (int i = 0; i < algorithm.getListIcon().size(); i++) {  // remove icon ra khoi mang list Icon
 
                     if (algorithm.getListIcon().get(i) == iconRemove) {
                         System.out.println(i);
