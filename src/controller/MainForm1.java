@@ -4,12 +4,11 @@
  */
 package controller;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.index;
+//import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.index;
 
 /**
  *
@@ -53,6 +52,8 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pauseDialog = new javax.swing.JDialog();
+        resumeBtn = new javax.swing.JButton();
         pnlIcon = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pgbTime = new javax.swing.JProgressBar();
@@ -62,7 +63,23 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         lblScore = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         lblSwap = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lblLevel = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+
+        pauseDialog.setMinimumSize(new java.awt.Dimension(300, 400));
+        pauseDialog.setModal(true);
+        pauseDialog.setUndecorated(true);
+        pauseDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        resumeBtn.setText("resume");
+        resumeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resumeBtnActionPerformed(evt);
+            }
+        });
+        pauseDialog.getContentPane().add(resumeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, -1, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(800, 600));
@@ -73,7 +90,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         getContentPane().add(pnlIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 630, 480));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Screenshot 2021-12-13 233159.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 120));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 130));
 
         pgbTime.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(pgbTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 131, 23, 480));
@@ -88,7 +105,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
                 btnNewGameActionPerformed(evt);
             }
         });
-        getContentPane().add(btnNewGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(251, 11, 100, 30));
+        getContentPane().add(btnNewGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 100, 30));
 
         btnExit.setBackground(new java.awt.Color(255, 204, 0));
         btnExit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -100,17 +117,17 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
                 btnExitActionPerformed(evt);
             }
         });
-        getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 10, 100, 30));
+        getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 100, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("SCORE");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 160, 70, 30));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 70, 30));
 
         lblScore.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblScore.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblScore.setText("0");
-        getContentPane().add(lblScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 80, 40));
+        getContentPane().add(lblScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 80, 40));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setText("SWAP");
@@ -123,21 +140,34 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
         lblSwap.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblSwap.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSwap.setText("10");
+        lblSwap.setText("5");
         getContentPane().add(lblSwap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 63, 30));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("LEVEL");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 60, -1));
+
+        lblLevel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblLevel.setText("1");
+        getContentPane().add(lblLevel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
+
+        jButton1.setBackground(new java.awt.Color(255, 204, 0));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setText("PAUSE");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(445, 40, 110, 30));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/hinh-nen-pokemon-chibi_035414814.jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 620));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewGameActionPerformed
-        if (evt.getSource() == btnNewGame) {
-            showDialogNewGame("Your game hasn't done. Do you want to create a new game?", "Warning", 0);
-        }
-    }//GEN-LAST:event_btnNewGameActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         System.exit(0);
@@ -153,10 +183,35 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewGameActionPerformed
+        if (evt.getSource() == btnNewGame) {
+            showDialogNewGame("Your game hasn't done. Do you want to create a new game?", "Warning", 0);
+            
+        }
+    }//GEN-LAST:event_btnNewGameActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (isPause()) {
+            pause = false;
+            pauseDialog.setVisible(false);
+            
+        } else {
+            pause = true;
+            pauseDialog.setVisible(true);
+            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void resumeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resumeBtnActionPerformed
+        // TODO add your handling code here:
+         pauseDialog.setVisible(false);
+        pause = !pause;
+    }//GEN-LAST:event_resumeBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main1(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -194,9 +249,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     public void newGame() {
         time = maxTime;
         graphicsPanel.removeAll();
-        createGraphicsPanel();
-//        pnlIcon.add(new ButtonEvent(this,row,col));//, BorderLayout.CENTER
-//        pnlIcon.add(createGraphicsPanel());
+        createGraphicsPanel();     
         pnlIcon.validate();
         pnlIcon.setVisible(true);
         lblScore.setText("0");
@@ -211,9 +264,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
                 e.printStackTrace();
             }
             if (isPause()) {
-                if (isResume()) {
-                    time--;
-                }
+               
             } else {
                 time--;
             }
@@ -249,7 +300,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     public boolean showDialogNewGame(String message, String title, int t) {
         pause = true;
         resume = false;
-
+       
         int select = JOptionPane.showOptionDialog(null, message, title,
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 null, null);
@@ -274,13 +325,18 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnNewGame;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblLevel;
     public javax.swing.JLabel lblScore;
     private javax.swing.JLabel lblSwap;
+    private javax.swing.JDialog pauseDialog;
     private javax.swing.JProgressBar pgbTime;
     private javax.swing.JPanel pnlIcon;
+    private javax.swing.JButton resumeBtn;
     // End of variables declaration//GEN-END:variables
 }
