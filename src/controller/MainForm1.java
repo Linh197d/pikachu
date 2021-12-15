@@ -4,7 +4,6 @@
  */
 package controller;
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -17,6 +16,7 @@ import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.index;
  * @author ADMIN
  */
 public class MainForm1 extends javax.swing.JFrame implements Runnable {
+
     private int row = 8; //8
     private int col = 8;//8
     private ButtonEvent graphicsPanel;
@@ -24,23 +24,26 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     private boolean resume = false;
     private int maxTime = 300;
     public int time = maxTime;
+    public int swap = 5;
 
     /**
      * Creates new form MainForm
      */
     public MainForm1() {
         initComponents();
+        lblSwap.setText("" + swap);
         createGraphicsPanel();
-    
+
     }
 
-private JPanel createGraphicsPanel() {
-        graphicsPanel = new ButtonEvent( this,row, col); // this,row col
-        pnlIcon.setBackground(Color.gray); 
+    private JPanel createGraphicsPanel() {
+        pnlIcon.removeAll();// sau khi new game thi xoa panel cu
+        graphicsPanel = new ButtonEvent(this, row, col); // this,row col
+        pnlIcon.setBackground(Color.gray);
         pnlIcon.add(graphicsPanel);
         return pnlIcon;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,7 +76,7 @@ private JPanel createGraphicsPanel() {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 120));
 
         pgbTime.setOrientation(SwingConstants.VERTICAL);
-        getContentPane().add(pgbTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 170, 23, 391));
+        getContentPane().add(pgbTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 131, 23, 480));
 
         btnNewGame.setBackground(new java.awt.Color(255, 204, 0));
         btnNewGame.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -111,6 +114,11 @@ private JPanel createGraphicsPanel() {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setText("SWAP");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 73, 31));
 
         lblSwap.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -132,8 +140,18 @@ private JPanel createGraphicsPanel() {
     }//GEN-LAST:event_btnNewGameActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-            System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (swap > 0) {
+            graphicsPanel.changePosition();
+            swap--;
+            lblSwap.setText("" + swap);
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,26 +182,25 @@ private JPanel createGraphicsPanel() {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-           
+
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
+//        java.awt.EventQueue.invokeLater(() -> {
             MainForm1 form = new MainForm1();
             form.setVisible(true);
             new Thread((Runnable) form).start();
-        });
+//        });
     }
-    
 
     public void newGame() {
         time = maxTime;
         graphicsPanel.removeAll();
         createGraphicsPanel();
-        //pnlIcon.add(new ButtonEvent(this,row,col));//, BorderLayout.CENTER
+//        pnlIcon.add(new ButtonEvent(this,row,col));//, BorderLayout.CENTER
+//        pnlIcon.add(createGraphicsPanel());
         pnlIcon.validate();
         pnlIcon.setVisible(true);
         lblScore.setText("0");
     }
-
 
     @Override
     public void run() {
@@ -194,28 +211,24 @@ private JPanel createGraphicsPanel() {
                 e.printStackTrace();
             }
             if (isPause()) {
-                    if (isResume()) {
-                        time--;
-                    }
-                } else {
+                if (isResume()) {
                     time--;
                 }
-                if (time == 0) {
-                    
-                    if (showDialogNewGame(
-                            "Full time\nDo you want play again?", "Lose", 1) == true) {
-                        
-                    }
+            } else {
+                time--;
+            }
+            if (time == 0) {
+
+                if (showDialogNewGame(
+                        "Full time\nDo you want play again?", "Lose", 1) == true) {
+
                 }
-                if(pgbTime!= null){
-            pgbTime.setValue((int) ((double) time / maxTime * 100));
-                }
+            }
+            if (pgbTime != null) {
+                pgbTime.setValue((int) ((double) time / maxTime * 100));
+            }
         }
     }
-
-    
-
-    
 
     public boolean isPause() {
         return pause;
@@ -236,13 +249,13 @@ private JPanel createGraphicsPanel() {
     public boolean showDialogNewGame(String message, String title, int t) {
         pause = true;
         resume = false;
-        
+
         int select = JOptionPane.showOptionDialog(null, message, title,
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 null, null);
         if (select == 0) {
             pause = false;
-            
+
             newGame();
             return true;
         } else {
@@ -250,7 +263,7 @@ private JPanel createGraphicsPanel() {
                 System.exit(0);
                 return false;
             } else {
-               
+
                 resume = true;
                 return true;
             }
@@ -258,7 +271,6 @@ private JPanel createGraphicsPanel() {
     }
 
 
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnNewGame;
