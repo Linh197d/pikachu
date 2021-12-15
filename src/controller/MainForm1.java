@@ -24,12 +24,14 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     private boolean resume = false;
     private int maxTime = 300;
     public int time = maxTime;
+    public int swap = 5;
 
     /**
      * Creates new form MainForm
      */
     public MainForm1() {
         initComponents();
+        lblSwap.setText("" + swap);
         createGraphicsPanel();
     
     }
@@ -57,7 +59,7 @@ private JPanel createGraphicsPanel() {
         btnExit = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         lblScore = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnSwap = new javax.swing.JButton();
         lblSwap = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -109,9 +111,14 @@ private JPanel createGraphicsPanel() {
         lblScore.setText("0");
         getContentPane().add(lblScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 80, 40));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setText("SWAP");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 73, 31));
+        btnSwap.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnSwap.setText("SWAP");
+        btnSwap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSwapActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSwap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 73, 31));
 
         lblSwap.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblSwap.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -134,6 +141,14 @@ private JPanel createGraphicsPanel() {
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
             System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnSwapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSwapActionPerformed
+        if (swap > 0) {
+            graphicsPanel.changePosition();
+            swap--;
+            lblSwap.setText(""+swap);
+        }
+    }//GEN-LAST:event_btnSwapActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,6 +197,7 @@ private JPanel createGraphicsPanel() {
         pnlIcon.validate();
         pnlIcon.setVisible(true);
         lblScore.setText("0");
+        lblSwap.setText("10");
     }
 
 
@@ -262,7 +278,7 @@ private JPanel createGraphicsPanel() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnNewGame;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnSwap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
