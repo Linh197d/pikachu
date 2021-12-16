@@ -1,7 +1,12 @@
-
 package controller;
 
+import java.io.BufferedReader; // lib file
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException; // lib file
 import javax.swing.SwingConstants;
+import java.util.ArrayList;
 
 /**
  *
@@ -37,6 +42,11 @@ public class NewJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(690, 610));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.CardLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -108,15 +118,84 @@ public class NewJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinueActionPerformed
-        // TODO add your handling code here:
+        ArrayList<Integer> arr = new ArrayList<>();
+        try {
+            //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+            File f = new File("saveMap.txt");
+            FileReader fr = new FileReader(f);
+            //Bước 2: Đọc dữ liệu
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                int i = 0;
+                String[] result = new String[100];
+                result = line.split(" ");
+//                System.out.println(result.length);
+//  
+                while (i < result.length) {
+                    arr.add(Integer.parseInt(result[i]));
+                    i++;
+                }
+            }
+
+            int time = 0;
+            File t = new File("saveTime.txt");
+            FileReader rt = new FileReader(t);
+            BufferedReader br1 = new BufferedReader(rt);
+            String line1;
+            while ((line1 = br1.readLine()) != null) {
+                time = Integer.parseInt(line1);
+                System.out.print("time" + time);
+
+            }
+
+            int score = 0;
+            File sc = new File("saveScore.txt");
+            FileReader rSc = new FileReader(sc);
+            BufferedReader br2 = new BufferedReader(rSc);
+            String line2;
+            while ((line2 = br2.readLine()) != null) {
+                score = Integer.parseInt(line2);
+                System.out.print("score" + score);
+
+            }
+            int swap = 0;
+            File sw = new File("saveSwap.txt");
+            FileReader rSw = new FileReader(sw);
+            BufferedReader br3 = new BufferedReader(rSw);
+            String line3;
+            while ((line3 = br3.readLine()) != null) {
+                swap = Integer.parseInt(line3);
+//                System.out.print("score" + score);
+
+            }
+
+            MainForm1 form = new MainForm1(score, swap);
+//            form.removeAll();
+            form.graphicsPanel.setResume(arr);
+            form.time = time;
+            form.score = score;
+            form.swap = swap;
+            form.graphicsPanel.score = score;
+            this.setVisible(false);
+            form.setVisible(true);
+//            System.out.println(arr.get(18));
+            new Thread((Runnable) form).start();
+            fr.close();
+            br.close();
+        } catch (Exception ex) {
+            System.out.println("Loi doc file: " + ex);
+        }
+
     }//GEN-LAST:event_btnContinueActionPerformed
 
     private void btnNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewGameActionPerformed
         MainForm1 form = new MainForm1();
+
         form.setVisible(true);
         this.setVisible(false);
         new Thread((Runnable) form).start();
-        
+
     }//GEN-LAST:event_btnNewGameActionPerformed
 
     private void btnHowToPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHowToPlayActionPerformed
@@ -129,12 +208,19 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void btnAboutUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutUsActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_btnAboutUsActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+//        form.graphicsPanel.saveMap();
+//        System.out.println("abc");
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-    public static void main (String args[]) {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

@@ -4,7 +4,13 @@
  */
 package controller;
 
+import java.io.BufferedReader; // lib file
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException; // lib file
 import java.awt.Color;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -18,22 +24,32 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
     private int row = 8; //8
     private int col = 8;//8
-    private ButtonEvent graphicsPanel;
+    public ButtonEvent graphicsPanel;
     private boolean pause = false;
     private boolean resume = false;
     private int maxTime = 300;
     public int time = maxTime;
     public int swap = 5;
+    public int score = 0;
 
     /**
      * Creates new form MainForm
      */
     public MainForm1() {
         initComponents();
+//        pauseDialog.setLocationRelativeTo(pnlIcon);// set pause dialog center
         lblSwap.setText("" + swap);
+        lblScore.setText("" +score);
         createGraphicsPanel();
 
     }
+     public MainForm1( int score, int swap){
+      initComponents();
+//        pauseDialog.setLocationRelativeTo(pnlIcon);// set pause dialog center
+        lblSwap.setText("" + swap);
+        lblScore.setText("" +score);
+        createGraphicsPanel();
+     }
 
     private JPanel createGraphicsPanel() {
         pnlIcon.removeAll();// sau khi new game thi xoa panel cu
@@ -54,6 +70,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
         pauseDialog = new javax.swing.JDialog();
         resumeBtn = new javax.swing.JButton();
+        Menubtn = new javax.swing.JButton();
         pnlIcon = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pgbTime = new javax.swing.JProgressBar();
@@ -68,9 +85,11 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
-        pauseDialog.setMinimumSize(new java.awt.Dimension(300, 400));
+        pauseDialog.setLocation(new java.awt.Point(0, 0));
+        pauseDialog.setMinimumSize(new java.awt.Dimension(500, 500));
         pauseDialog.setModal(true);
         pauseDialog.setUndecorated(true);
+        pauseDialog.setResizable(false);
         pauseDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         resumeBtn.setText("resume");
@@ -79,15 +98,31 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
                 resumeBtnActionPerformed(evt);
             }
         });
-        pauseDialog.getContentPane().add(resumeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, -1, -1));
+        pauseDialog.getContentPane().add(resumeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
+
+        Menubtn.setText("Menu");
+        Menubtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenubtnActionPerformed(evt);
+            }
+        });
+        pauseDialog.getContentPane().add(Menubtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(800, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlIcon.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         pnlIcon.setLayout(new java.awt.GridBagLayout());
-        getContentPane().add(pnlIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 630, 480));
+        getContentPane().add(pnlIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 600, 470));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Screenshot 2021-12-13 233159.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 130));
@@ -170,7 +205,10 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        System.exit(0);
+        graphicsPanel.saveMap();
+        graphicsPanel.saveScore();
+        graphicsPanel.saveSwap(swap);
+        graphicsPanel.saveTime(time);
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -186,7 +224,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     private void btnNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewGameActionPerformed
         if (evt.getSource() == btnNewGame) {
             showDialogNewGame("Your game hasn't done. Do you want to create a new game?", "Warning", 0);
-            
+
         }
     }//GEN-LAST:event_btnNewGameActionPerformed
 
@@ -194,19 +232,43 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         if (isPause()) {
             pause = false;
             pauseDialog.setVisible(false);
-            
+
         } else {
             pause = true;
             pauseDialog.setVisible(true);
-            
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void resumeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resumeBtnActionPerformed
         // TODO add your handling code here:
-         pauseDialog.setVisible(false);
+        pauseDialog.setVisible(false);
         pause = !pause;
     }//GEN-LAST:event_resumeBtnActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        System.out.println("da thoat");
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        graphicsPanel.saveMap();
+        graphicsPanel.saveScore();
+        graphicsPanel.saveSwap(swap);
+        graphicsPanel.saveTime(time);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void MenubtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenubtnActionPerformed
+        NewJFrame menu = new NewJFrame();
+        graphicsPanel.saveMap();
+        graphicsPanel.saveScore();
+        graphicsPanel.saveSwap(swap);
+        graphicsPanel.saveTime(time);
+        pauseDialog.setVisible(false);
+        menu.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_MenubtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,16 +302,18 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
         /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(() -> {
-            MainForm1 form = new MainForm1();
-            form.setVisible(true);
-            new Thread((Runnable) form).start();
+        MainForm1 form = new MainForm1();
+        form.setVisible(true);
+        new Thread((Runnable) form).start();
 //        });
     }
 
     public void newGame() {
+        swap = 5;//// new game them swap
+        lblSwap.setText("" + swap);// new game them swap
         time = maxTime;
         graphicsPanel.removeAll();
-        createGraphicsPanel();     
+        createGraphicsPanel();
         pnlIcon.validate();
         pnlIcon.setVisible(true);
         lblScore.setText("0");
@@ -264,7 +328,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
                 e.printStackTrace();
             }
             if (isPause()) {
-               
+
             } else {
                 time--;
             }
@@ -293,20 +357,18 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         return resume;
     }
 
-    public void setResume(boolean resume) {
-        this.resume = resume;
-    }
-
+//    public void setResume(boolean resume) {
+//        this.resume = resume;
+//    }
     public boolean showDialogNewGame(String message, String title, int t) {
         pause = true;
         resume = false;
-       
+
         int select = JOptionPane.showOptionDialog(null, message, title,
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 null, null);
         if (select == 0) {
             pause = false;
-
             newGame();
             return true;
         } else {
@@ -323,6 +385,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Menubtn;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnNewGame;
     private javax.swing.JButton jButton1;
@@ -333,7 +396,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lblLevel;
     public javax.swing.JLabel lblScore;
-    private javax.swing.JLabel lblSwap;
+    public javax.swing.JLabel lblSwap;
     private javax.swing.JDialog pauseDialog;
     private javax.swing.JProgressBar pgbTime;
     private javax.swing.JPanel pnlIcon;

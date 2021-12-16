@@ -352,7 +352,10 @@ public void newRandMap() { // ma tran moi khi random
     public int[][] getMatrix() {
         return matrix;
     }
-
+ public int getIndex(int i, int j) // lay ra phan tu cua ma tran
+ {
+     return matrix[i][j];
+ }
     public void setMatrix(int[][] matrix) {
         this.matrix = matrix;
     }
