@@ -12,10 +12,19 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.BufferedReader; // lib file
+import java.io.*;
+import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.Writer;
+import java.io.IOException; // lib file
+import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -31,7 +40,7 @@ public class ButtonEvent extends JPanel implements ActionListener {
     private int col;
     private int bound = 2;
     private int size = 38;
-    private int score = 0;
+    public int score = 0;
     private JButton[][] btn;
     private Point p1 = null;
     private Point p2 = null;
@@ -61,17 +70,25 @@ public class ButtonEvent extends JPanel implements ActionListener {
     public void newGame() {
         algorithm = new Controller(this.frame, this.row, this.col);
         addArrayButton();
+//        saveMap();
 
     }
 
     private void addArrayButton() {
+        this.removeAll();
         btn = new JButton[row][col];
         for (int i = 1; i < row - 1; i++) {
             for (int j = 1; j < col - 1; j++) {
-                btn[i][j] = createButton(i + "," + j);
-                Icon icon = getIcon(algorithm.getMatrix()[i][j]);
-                btn[i][j].setIcon(icon);
-                add(btn[i][j]);
+                if (algorithm.getMatrix()[i][j] != 0) {
+                    btn[i][j] = createButton(i + "," + j);
+                    Icon icon = getIcon(algorithm.getMatrix()[i][j]);
+                    btn[i][j].setIcon(icon);
+                    add(btn[i][j]);
+                } else {
+                    btn[i][j] = createButton(i + "," + j);
+                    add(btn[i][j]);
+                    setDisable(btn[i][j]);
+                }
             }
         }
     }
@@ -94,21 +111,7 @@ public class ButtonEvent extends JPanel implements ActionListener {
         }
         this.removeAll();
         algorithm.newRandMap();
-//        btn = new JButton[row][col];
-        for (int i = 1; i < row - 1; i++) {
-            for (int j = 1; j < col - 1; j++) {
-                if (algorithm.getMatrix()[i][j] != 0) {
-                    btn[i][j] = createButton(i + "," + j);
-                    Icon icon = getIcon(algorithm.getMatrix()[i][j]);
-                    btn[i][j].setIcon(icon);
-                    add(btn[i][j]);
-                } else {
-                    btn[i][j] = createButton(i + "," + j);
-                    add(btn[i][j]);
-                    setDisable(btn[i][j]);
-                }
-            }
-        }
+        addArrayButton();
     }
 
     private JButton createButton(String action) {
@@ -132,6 +135,86 @@ public class ButtonEvent extends JPanel implements ActionListener {
         btn.setEnabled(false);
     }
 
+    public void setResume(ArrayList<Integer> arr) {
+        int k = 0;
+
+        for (int i = 0; i < col; i++) {
+            for (int j = 0; j < col; j++) {
+                algorithm.getMatrix()[i][j] = arr.get(k);
+                k++;
+            }
+        }
+        addArrayButton();
+    }
+
+    public void saveMap() {
+        try {
+            //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+            File f = new File("saveMap.txt");
+            FileWriter fw = new FileWriter(f);
+            //Bước 2: Ghi dữ liệu
+            for (int i = 0; i < row; i++) {
+                for (int j = 0; j < col; j++) {
+                    fw.write(algorithm.getIndex(i, j) + " ");
+                }
+                fw.write("\n");
+            }
+            //Bước 3: Đódssng luồng
+            fw.close();
+
+        } catch (IOException ex) {
+            System.out.println("Loi ghi file: " + ex);
+        }
+
+    }
+
+    public void saveTime(int time) {
+        try {
+            //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+            File f = new File("saveTime.txt");
+            FileWriter fw = new FileWriter(f);
+            //Bước 2: Ghi dữ liệu
+            fw.write(time + "");
+
+            //Bước 3: Đódssng luồng
+            fw.close();
+
+        } catch (IOException ex) {
+            System.out.println("Loi ghi file: " + ex);
+        }
+    }
+
+    public void saveSwap(int swap) {
+        try {
+            //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+            File f = new File("saveSwap.txt");
+            FileWriter fw = new FileWriter(f);
+            //Bước 2: Ghi dữ liệu
+            fw.write(swap + "");
+
+            //Bước 3: Đódssng luồng
+            fw.close();
+
+        } catch (IOException ex) {
+            System.out.println("Loi ghi file: " + ex);
+        }
+    }
+
+    public void saveScore() {
+        try {
+            //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+            File f = new File("saveScore.txt");
+            FileWriter fw = new FileWriter(f);
+            //Bước 2: Ghi dữ liệu
+            fw.write(score + "");
+            //Bước 3: Đódssng luồng
+            fw.close();
+
+        } catch (IOException ex) {
+            System.out.println("Loi ghi file: " + ex);
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String btnIndex = e.getActionCommand();
@@ -148,7 +231,7 @@ public class ButtonEvent extends JPanel implements ActionListener {
                     + p2.x + "," + p2.y + ")");
             line = algorithm.checkTwoPoint(p1, p2);
             if (line != null) {
-                 int iconRemove = algorithm.getMatrix()[p1.x][p1.y]; // remove icon ra khoi mang list Icon
+                int iconRemove = algorithm.getMatrix()[p1.x][p1.y]; // remove icon ra khoi mang list Icon
                 System.out.println("line != null");
                 for (int i = 0; i < algorithm.getListIcon().size(); i++) {  // remove icon ra khoi mang list Icon
 
