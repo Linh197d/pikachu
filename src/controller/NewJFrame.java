@@ -30,6 +30,8 @@ public class NewJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        continueDialog = new javax.swing.JDialog();
+        continuelbl = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnContinue = new javax.swing.JButton();
         btnHowToPlay = new javax.swing.JButton();
@@ -38,6 +40,39 @@ public class NewJFrame extends javax.swing.JFrame {
         btnAboutUs = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+
+        continueDialog.setMinimumSize(new java.awt.Dimension(300, 300));
+        continueDialog.setModal(true);
+        continueDialog.setUndecorated(true);
+        continueDialog.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                continueDialogMouseMoved(evt);
+            }
+        });
+        continueDialog.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                continueDialogComponentShown(evt);
+            }
+        });
+
+        continuelbl.setText("chua co du lieu game ");
+
+        javax.swing.GroupLayout continueDialogLayout = new javax.swing.GroupLayout(continueDialog.getContentPane());
+        continueDialog.getContentPane().setLayout(continueDialogLayout);
+        continueDialogLayout.setHorizontalGroup(
+            continueDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(continueDialogLayout.createSequentialGroup()
+                .addGap(163, 163, 163)
+                .addComponent(continuelbl)
+                .addContainerGap(130, Short.MAX_VALUE))
+        );
+        continueDialogLayout.setVerticalGroup(
+            continueDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(continueDialogLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(continuelbl)
+                .addContainerGap(262, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(690, 610));
@@ -184,6 +219,7 @@ public class NewJFrame extends javax.swing.JFrame {
             fr.close();
             br.close();
         } catch (Exception ex) {
+            continueDialog.setVisible(true);
             System.out.println("Loi doc file: " + ex);
         }
 
@@ -216,6 +252,16 @@ public class NewJFrame extends javax.swing.JFrame {
 //        form.graphicsPanel.saveMap();
 //        System.out.println("abc");
     }//GEN-LAST:event_formWindowClosing
+
+    private void continueDialogMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueDialogMouseMoved
+        // TODO add your handling code here:
+        continueDialog.setLocationRelativeTo(this);
+    }//GEN-LAST:event_continueDialogMouseMoved
+
+    private void continueDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_continueDialogComponentShown
+        // TODO add your handling code here:
+        continueDialog.setLocationRelativeTo(this);
+    }//GEN-LAST:event_continueDialogComponentShown
 
     /**
      * @param args the command line arguments
@@ -258,6 +304,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnHighScore;
     private javax.swing.JButton btnHowToPlay;
     private javax.swing.JButton btnNewGame;
+    private javax.swing.JDialog continueDialog;
+    private javax.swing.JLabel continuelbl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

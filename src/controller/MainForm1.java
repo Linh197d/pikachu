@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 //import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.index;
 
 /**
@@ -37,19 +38,21 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
      */
     public MainForm1() {
         initComponents();
-//        pauseDialog.setLocationRelativeTo(pnlIcon);// set pause dialog center
+        pauseDialog.setLocationRelativeTo(pnlIcon);// set pause dialog center
         lblSwap.setText("" + swap);
-        lblScore.setText("" +score);
+        lblScore.setText("" + score);
         createGraphicsPanel();
-
+   pgbTime.setStringPainted(true);
+        pgbTime.setForeground(Color.blue);
     }
-     public MainForm1( int score, int swap){
-      initComponents();
+
+    public MainForm1(int score, int swap) {
+        initComponents();
 //        pauseDialog.setLocationRelativeTo(pnlIcon);// set pause dialog center
         lblSwap.setText("" + swap);
-        lblScore.setText("" +score);
+        lblScore.setText("" + score);
         createGraphicsPanel();
-     }
+    }
 
     private JPanel createGraphicsPanel() {
         pnlIcon.removeAll();// sau khi new game thi xoa panel cu
@@ -71,11 +74,11 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         pauseDialog = new javax.swing.JDialog();
         resumeBtn = new javax.swing.JButton();
         Menubtn = new javax.swing.JButton();
+        restartBtn = new javax.swing.JButton();
+        exitBtn = new javax.swing.JButton();
         pnlIcon = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pgbTime = new javax.swing.JProgressBar();
-        btnNewGame = new javax.swing.JButton();
-        btnExit = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         lblScore = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -98,7 +101,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
                 resumeBtnActionPerformed(evt);
             }
         });
-        pauseDialog.getContentPane().add(resumeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
+        pauseDialog.getContentPane().add(resumeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, 30));
 
         Menubtn.setText("Menu");
         Menubtn.addActionListener(new java.awt.event.ActionListener() {
@@ -106,10 +109,32 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
                 MenubtnActionPerformed(evt);
             }
         });
-        pauseDialog.getContentPane().add(Menubtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
+        pauseDialog.getContentPane().add(Menubtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, -1, -1));
+
+        restartBtn.setText("restart");
+        restartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restartBtnActionPerformed(evt);
+            }
+        });
+        pauseDialog.getContentPane().add(restartBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
+
+        exitBtn.setText("exit");
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
+        pauseDialog.getContentPane().add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 70, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentMoved(java.awt.event.ComponentEvent evt) {
+                formComponentMoved(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -129,30 +154,6 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
         pgbTime.setOrientation(SwingConstants.VERTICAL);
         getContentPane().add(pgbTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 131, 23, 480));
-
-        btnNewGame.setBackground(new java.awt.Color(255, 204, 0));
-        btnNewGame.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnNewGame.setText("NEW GAME");
-        btnNewGame.setBorder(new javax.swing.border.MatteBorder(null));
-        btnNewGame.setPreferredSize(new java.awt.Dimension(90, 23));
-        btnNewGame.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewGameActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnNewGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 100, 30));
-
-        btnExit.setBackground(new java.awt.Color(255, 204, 0));
-        btnExit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnExit.setText("EXIT");
-        btnExit.setBorder(new javax.swing.border.MatteBorder(null));
-        btnExit.setPreferredSize(new java.awt.Dimension(90, 23));
-        btnExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExitActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 100, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -204,13 +205,6 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        graphicsPanel.saveMap();
-        graphicsPanel.saveScore();
-        graphicsPanel.saveSwap(swap);
-        graphicsPanel.saveTime(time);
-    }//GEN-LAST:event_btnExitActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (swap > 0) {
             graphicsPanel.changePosition();
@@ -220,13 +214,6 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void btnNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewGameActionPerformed
-        if (evt.getSource() == btnNewGame) {
-            showDialogNewGame("Your game hasn't done. Do you want to create a new game?", "Warning", 0);
-
-        }
-    }//GEN-LAST:event_btnNewGameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (isPause()) {
@@ -253,26 +240,46 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        graphicsPanel.saveMap();
-        graphicsPanel.saveScore();
-        graphicsPanel.saveSwap(swap);
-        graphicsPanel.saveTime(time);
+        saveData();
     }//GEN-LAST:event_formWindowClosing
 
     private void MenubtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenubtnActionPerformed
         NewJFrame menu = new NewJFrame();
-        graphicsPanel.saveMap();
-        graphicsPanel.saveScore();
-        graphicsPanel.saveSwap(swap);
-        graphicsPanel.saveTime(time);
+        saveData();
         pauseDialog.setVisible(false);
         menu.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_MenubtnActionPerformed
 
+    private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
+        // TODO add your handling code here:
+        pauseDialog.setLocationRelativeTo(pnlIcon);
+    }//GEN-LAST:event_formComponentMoved
+
+    private void restartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartBtnActionPerformed
+        //ODO add your handling code here: T
+        newGame();
+        pause = !pause;
+        pauseDialog.setVisible(false);
+    }//GEN-LAST:event_restartBtnActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        // TODO add your handling code here:
+        saveData();
+        System.exit(0);
+    }//GEN-LAST:event_exitBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
+    public void saveData() {
+
+        graphicsPanel.saveMap();
+        graphicsPanel.saveScore();
+        graphicsPanel.saveSwap(swap);
+        graphicsPanel.saveTime(time);
+    }
+
     public static void main1(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -321,6 +328,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
     @Override
     public void run() {
+     
         while (true) {
             try {
                 Thread.sleep(1000);
@@ -386,8 +394,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Menubtn;
-    private javax.swing.JButton btnExit;
-    private javax.swing.JButton btnNewGame;
+    private javax.swing.JButton exitBtn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -400,6 +407,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     private javax.swing.JDialog pauseDialog;
     private javax.swing.JProgressBar pgbTime;
     private javax.swing.JPanel pnlIcon;
+    private javax.swing.JButton restartBtn;
     private javax.swing.JButton resumeBtn;
     // End of variables declaration//GEN-END:variables
 }
