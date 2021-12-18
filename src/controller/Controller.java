@@ -5,16 +5,13 @@
  */
 package controller;
 
-
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
-
-
 /**
  *
- * @author 
+ * @author
  */
 public class Controller {
 
@@ -23,8 +20,9 @@ public class Controller {
     private int[][] matrix;
     MainForm1 frame;
     private ArrayList<Integer> listIcon = new ArrayList<>(); // array luu mang cac Icon
+    public ArrayList<Point> listIndexRemove = new ArrayList<>();
 
-    public Controller( MainForm1 frame,int row, int col) {//MainFrame frame,
+    public Controller(MainForm1 frame, int row, int col) {//MainFrame frame,
         this.frame = frame;
         this.row = row;
         this.col = col;
@@ -56,7 +54,7 @@ public class Controller {
             }
             System.out.println("ok: " + x + "" + y);
         }
-       
+
         // not die -> success
         return true;
     }
@@ -89,7 +87,7 @@ public class Controller {
                 return false;
             }
             // check two line
-            if ((matrix[pMaxY.x][y] == 0 || y == pMaxY.y )
+            if ((matrix[pMaxY.x][y] == 0 || y == pMaxY.y)
                     && checkLineY(pMinY.x, pMaxY.x, y)
                     && checkLineX(y, pMaxY.y, pMaxY.x)) {
 
@@ -118,7 +116,7 @@ public class Controller {
             if (x > pMinX.x && matrix[x][pMinX.y] != 0) {
                 return false;
             }
-            if ((matrix[x][pMaxX.y] == 0|| x == pMaxX.x)
+            if ((matrix[x][pMaxX.y] == 0 || x == pMaxX.x)
                     && checkLineX(pMinX.y, pMaxX.y, x)
                     && checkLineY(x, pMaxX.x, pMaxX.y)) {
 
@@ -209,8 +207,6 @@ public class Controller {
         return false;
     }
 
-
-
     public PointLine checkTwoPoint(Point p1, Point p2) {
 
         if (!p1.equals(p2) && matrix[p1.x][p1.y] == matrix[p2.x][p2.y]) {
@@ -229,7 +225,6 @@ public class Controller {
                     return new PointLine(p1, p2);
                 }
             }
-
 
             // check in rectangle with x
             if (checkRectX(p1, p2)) {
@@ -306,17 +301,18 @@ public class Controller {
             }
         } while (i < row * col / 2);
     }
-public void newRandMap() { // ma tran moi khi random
+
+    public void newRandMap() { // ma tran moi khi random
         Random rand = new Random();
         ArrayList<Integer> tempListIcon = new ArrayList<>();
-        
-        for(int i =0; i<listIcon.size(); i++){
-        tempListIcon.add(listIcon.get(i));
+
+        for (int i = 0; i < listIcon.size(); i++) {
+            tempListIcon.add(listIcon.get(i));
         }
         System.out.println("row" + row + " col" + col);
-        for (int i = 1; i < row -1; i++) {
+        for (int i = 1; i < row - 1; i++) {
 
-            for (int j = 1; j < col -1; j++) {
+            for (int j = 1; j < col - 1; j++) {
 
                 if (matrix[i][j] != 0) {
                     int randIndex = rand.nextInt(tempListIcon.size());
@@ -327,12 +323,90 @@ public void newRandMap() { // ma tran moi khi random
             }
 
         }
-      
+
         showMatrix();
     }
-   public ArrayList<Integer> getListIcon() {
+
+    public void newLevel(Point aPoint, Point bPoint, int level) {
+        switch (level) {
+            case 2: // down
+                for (int i = aPoint.x; i >= 1;) {
+
+                    matrix[i][aPoint.y] = matrix[--i][aPoint.y];
+                }
+                for (int i = bPoint.x; i >= 1;) {
+
+                    matrix[i][bPoint.y] = matrix[--i][bPoint.y];
+                }
+                break;
+            case 3: // up 
+                for (int i = aPoint.x; i < row - 1;) {
+
+                    matrix[i][aPoint.y] = matrix[++i][aPoint.y];
+                }
+                for (int i = bPoint.x; i < row - 1;) {
+
+                    matrix[i][bPoint.y] = matrix[++i][bPoint.y];
+                }
+                break;
+            case 4: // right
+                for (int i = aPoint.y; i >= 1;) {
+
+                    matrix[aPoint.x][i] = matrix[aPoint.x][--i];
+                }
+                for (int i = bPoint.y; i >= 1;) {
+
+                    matrix[bPoint.x][i] = matrix[bPoint.x][--i];
+                }
+                break;
+            case 5: // left
+                for (int i = aPoint.y; i < col - 1;) {
+                    matrix[aPoint.x][i] = matrix[aPoint.x][++i];
+                }
+                for (int i = bPoint.y; i < col - 1;) {
+
+                    matrix[bPoint.x][i] = matrix[bPoint.x][++i];
+                }
+                break;
+            case 6:
+                Random rand = new Random();
+             
+                    int index = rand.nextInt(21); // rand icon
+                    for (int j = 0; j < 2; j++) {
+
+                        try {
+                            int indexRemove = rand.nextInt(listIndexRemove.size());
+                            matrix[listIndexRemove.get(indexRemove).x][listIndexRemove
+                                    .get(indexRemove).y] = index;
+                            listIndexRemove.remove(indexRemove);
+                        } catch (Exception e) {
+                        }
+                    }
+                }
+//
+        
+
+    }
+
+    public boolean isFull() {
+
+        int col = 10;
+        int row = 10;
+        for (int i = 1; i < row - 1; i++) {
+            for (int j = 1; j < col - 1; j++) {
+                if (matrix[i][j] == 0) {
+                    return false;
+                }
+
+            }
+        }
+        return true;
+    }
+
+    public ArrayList<Integer> getListIcon() {
         return listIcon;
     }
+
     public int getRow() {
         return row;
     }
@@ -352,10 +426,12 @@ public void newRandMap() { // ma tran moi khi random
     public int[][] getMatrix() {
         return matrix;
     }
- public int getIndex(int i, int j) // lay ra phan tu cua ma tran
- {
-     return matrix[i][j];
- }
+
+    public int getIndex(int i, int j) // lay ra phan tu cua ma tran
+    {
+        return matrix[i][j];
+    }
+
     public void setMatrix(int[][] matrix) {
         this.matrix = matrix;
     }

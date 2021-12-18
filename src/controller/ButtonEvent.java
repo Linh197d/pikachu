@@ -33,7 +33,7 @@ import javax.swing.border.LineBorder;
  *
  * @author Hungdim
  */
-public class ButtonEvent extends JPanel implements ActionListener {
+public class ButtonEvent extends JPanel implements ActionListener, Runnable {
 
     private static final long serialVersionUID = 1L;
     private int row;
@@ -49,20 +49,37 @@ public class ButtonEvent extends JPanel implements ActionListener {
     private MainForm1 frame;
     private Color backGroundColor = Color.lightGray;
     private int item;
+    public int timeHandle;
+    private int level = 1;
+    boolean closeThread = false;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     public ButtonEvent(MainForm1 frame, int row, int col) {
         this.frame = frame;
         this.row = row + 2;
         this.col = col + 2;
         item = row * col / 2;
-
         setLayout(new GridLayout(row, col, bound, bound));
         setBackground(backGroundColor);//backGroundColor
         setPreferredSize(new Dimension((size + bound) * col, (size + bound)
                 * row));
         setBorder(new EmptyBorder(2, 2, 2, 2));//10 
         setAlignmentY(JPanel.CENTER_ALIGNMENT);
-
         newGame();
 
     }
@@ -70,7 +87,44 @@ public class ButtonEvent extends JPanel implements ActionListener {
     public void newGame() {
         algorithm = new Controller(this.frame, this.row, this.col);
         addArrayButton();
+
+        new Thread((Runnable) this).start();
 //        saveMap();
+
+    }
+
+    public void isLv6() {
+        if (level == 6 && !algorithm.isFull()) {
+            for (int i = 1; i < row - 1; i++) {
+                for (int j = 1; j < col - 1; j++) {
+                    setDisable(btn[i][j]);
+                }
+            }
+            frame.pnlIcon.removeAll();
+            algorithm.newLevel(p1, p2, level);
+            algorithm.showMatrix();
+            frame.pnlIcon.remove(this);
+            addArrayButton();
+            frame.pnlIcon.add(this);
+        }
+
+    }
+
+    @Override
+    public void run() {
+        while (!closeThread) {
+            try {
+                Thread.sleep(1000);
+                ++timeHandle;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+
+            }
+            if (timeHandle > 10) {
+            }
+
+            System.out.println("time Handle: " + timeHandle);
+        }
 
     }
 
@@ -184,6 +238,26 @@ public class ButtonEvent extends JPanel implements ActionListener {
         }
     }
 
+    public void saveLevel(int level) {
+        try {
+            //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+            File f = new File("saveLevel.txt");
+            FileWriter fw = new FileWriter(f);
+            //Bước 2: Ghi dữ liệu
+            fw.write(level + "");
+
+            //Bước 3: Đódssng luồng
+            fw.close();
+
+        } catch (IOException ex) {
+            System.out.println("Loi ghi file: " + ex);
+        }
+    }
+
+    public void close() {
+        closeThread = true;
+    }
+
     public void saveSwap(int swap) {
         try {
             //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
@@ -222,6 +296,7 @@ public class ButtonEvent extends JPanel implements ActionListener {
         int x = Integer.parseInt(btnIndex.substring(0, indexDot));
         int y = Integer.parseInt(btnIndex.substring(indexDot + 1,
                 btnIndex.length()));
+
         if (p1 == null) {
             p1 = new Point(x, y);
             btn[p1.x][p1.y].setBorder(new LineBorder(Color.red));
@@ -231,37 +306,74 @@ public class ButtonEvent extends JPanel implements ActionListener {
                     + p2.x + "," + p2.y + ")");
             line = algorithm.checkTwoPoint(p1, p2);
             if (line != null) {
-                int iconRemove = algorithm.getMatrix()[p1.x][p1.y]; // remove icon ra khoi mang list Icon
-                System.out.println("line != null");
-                for (int i = 0; i < algorithm.getListIcon().size(); i++) {  // remove icon ra khoi mang list Icon
+                if (level == 1 || level == 6) {
+                    int iconRemove = algorithm.getMatrix()[p1.x][p1.y]; // remove icon ra khoi mang list Icon
+                    System.out.println("line != null");
+                    for (int i = 0; i < algorithm.getListIcon().size(); i++) {  // remove icon ra khoi mang list Icon
 
-                    if (algorithm.getListIcon().get(i) == iconRemove) {
-                        System.out.println(i);
-                        algorithm.getListIcon().remove(i);
-                        algorithm.getListIcon().remove(i);
-                        break;
+                        if (algorithm.getListIcon().get(i) == iconRemove) {
+                            System.out.println(i);
+                            algorithm.getListIcon().remove(i);
+                            algorithm.getListIcon().remove(i);
+                            break;
+                        }
                     }
+                    algorithm.getMatrix()[p1.x][p1.y] = 0;
+                    algorithm.getMatrix()[p2.x][p2.y] = 0;
+                    algorithm.listIndexRemove.add(p1);
+                    algorithm.listIndexRemove.add(p2);
+                    algorithm.showMatrix();
+                    execute(p1, p2);
+                    line = null;
+
+                } else {
+                    for (int i = 1; i < row - 1; i++) {
+                        for (int j = 1; j < col - 1; j++) {
+                            setDisable(btn[i][j]);
+                        }
+                    }
+                    int iconRemove = algorithm.getMatrix()[p1.x][p1.y]; // remove icon ra khoi mang list Icon
+                    System.out.println("line != null");
+                    for (int i = 0; i < algorithm.getListIcon().size(); i++) {  // remove icon ra khoi mang list Icon
+
+                        if (algorithm.getListIcon().get(i) == iconRemove) {
+                            System.out.println(i);
+                            algorithm.getListIcon().remove(i);
+                            algorithm.getListIcon().remove(i);
+                            algorithm.listIndexRemove.add(p1);
+                            algorithm.listIndexRemove.add(p2);
+                            break;
+                        }
+                    }
+
+                    frame.pnlIcon.removeAll();
+                    algorithm.newLevel(p1, p2, level);
+                    algorithm.showMatrix();
+                    frame.pnlIcon.remove(this);
+                    addArrayButton();
+                    frame.pnlIcon.add(this);
+                    line = null;
+
                 }
-                algorithm.getMatrix()[p1.x][p1.y] = 0;
-                algorithm.getMatrix()[p2.x][p2.y] = 0;
-                algorithm.showMatrix();
-                execute(p1, p2);
-                line = null;
-                score += 10;
+                if (timeHandle < 5) {
+                    score += 10;
+                } else if (timeHandle >= 5 && timeHandle <= 10) {
+                    score += 5;
+                } else {
+                    score += 2;
+                }
                 item--;
                 frame.time++;
                 frame.lblScore.setText(score + "");
+                timeHandle = 0; // xu ly diem 
             }
             btn[p1.x][p1.y].setBorder(null);
             p1 = null;
             p2 = null;
             System.out.println("done");
             if (item == 0) {
-
-                if (frame.showDialogNewGame(
-                        "You are winer!\nDo you want play again?", "Win", 1) == true) {
-
-                };
+                frame.showDialogNewGame();
+                close();
             }
         }
     }

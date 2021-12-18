@@ -204,8 +204,18 @@ public class NewJFrame extends javax.swing.JFrame {
 //                System.out.print("score" + score);
 
             }
+            int level = 0;
+            File lv = new File("saveLevel.txt");
+            FileReader rLv = new FileReader(lv);
+            BufferedReader br4 = new BufferedReader(rLv);
+            String line4;
+            while ((line4 = br4.readLine()) != null) {
+                level = Integer.parseInt(line4);
+//                System.out.print("score" + score);
 
-            MainForm1 form = new MainForm1(score, swap);
+            }
+
+            MainForm1 form = new MainForm1(score, swap,level);
 //            form.removeAll();
             form.graphicsPanel.setResume(arr);
             form.time = time;
@@ -227,7 +237,6 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void btnNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewGameActionPerformed
         MainForm1 form = new MainForm1();
-
         form.setVisible(true);
         this.setVisible(false);
         new Thread((Runnable) form).start();

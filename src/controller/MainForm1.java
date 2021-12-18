@@ -32,6 +32,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     public int time = maxTime;
     public int swap = 5;
     public int score = 0;
+    private int level = 1;
 
     /**
      * Creates new form MainForm
@@ -41,20 +42,21 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         pauseDialog.setLocationRelativeTo(pnlIcon);// set pause dialog center
         lblSwap.setText("" + swap);
         lblScore.setText("" + score);
+        lblLevel.setText("" + level);
         createGraphicsPanel();
-   pgbTime.setStringPainted(true);
-        pgbTime.setForeground(Color.blue);
+//        pgbTime.setBackground(Color.RED);
     }
 
-    public MainForm1(int score, int swap) {
+    public MainForm1(int score, int swap, int level) {
         initComponents();
 //        pauseDialog.setLocationRelativeTo(pnlIcon);// set pause dialog center
         lblSwap.setText("" + swap);
         lblScore.setText("" + score);
+        lblLevel.setText("" + level);
         createGraphicsPanel();
     }
 
-    private JPanel createGraphicsPanel() {
+    public JPanel createGraphicsPanel() {
         pnlIcon.removeAll();// sau khi new game thi xoa panel cu
         graphicsPanel = new ButtonEvent(this, row, col); // this,row col
         pnlIcon.setBackground(Color.gray);
@@ -76,6 +78,9 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         Menubtn = new javax.swing.JButton();
         restartBtn = new javax.swing.JButton();
         exitBtn = new javax.swing.JButton();
+        playNextDialog = new javax.swing.JDialog();
+        playNextBtn = new javax.swing.JButton();
+        newLevellLbl = new javax.swing.JLabel();
         pnlIcon = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pgbTime = new javax.swing.JProgressBar();
@@ -126,6 +131,38 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
             }
         });
         pauseDialog.getContentPane().add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 70, -1));
+
+        playNextDialog.setMinimumSize(new java.awt.Dimension(300, 300));
+
+        playNextBtn.setText("Play Next");
+        playNextBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playNextBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout playNextDialogLayout = new javax.swing.GroupLayout(playNextDialog.getContentPane());
+        playNextDialog.getContentPane().setLayout(playNextDialogLayout);
+        playNextDialogLayout.setHorizontalGroup(
+            playNextDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(playNextDialogLayout.createSequentialGroup()
+                .addGap(127, 127, 127)
+                .addComponent(playNextBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(200, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playNextDialogLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(newLevellLbl)
+                .addGap(178, 178, 178))
+        );
+        playNextDialogLayout.setVerticalGroup(
+            playNextDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(playNextDialogLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(newLevellLbl)
+                .addGap(74, 74, 74)
+                .addComponent(playNextBtn)
+                .addContainerGap(173, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -247,6 +284,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         NewJFrame menu = new NewJFrame();
         saveData();
         pauseDialog.setVisible(false);
+        graphicsPanel.close();
         menu.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_MenubtnActionPerformed
@@ -258,7 +296,10 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
     private void restartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartBtnActionPerformed
         //ODO add your handling code here: T
+        graphicsPanel.close();
+
         newGame();
+        graphicsPanel.closeThread = false;
         pause = !pause;
         pauseDialog.setVisible(false);
     }//GEN-LAST:event_restartBtnActionPerformed
@@ -269,6 +310,11 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         System.exit(0);
     }//GEN-LAST:event_exitBtnActionPerformed
 
+    private void playNextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNextBtnActionPerformed
+        continueGameAfterWin();
+        playNextDialog.setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_playNextBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -278,6 +324,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         graphicsPanel.saveScore();
         graphicsPanel.saveSwap(swap);
         graphicsPanel.saveTime(time);
+        graphicsPanel.saveLevel(level);
     }
 
     public static void main1(String args[]) {
@@ -326,9 +373,26 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         lblScore.setText("0");
     }
 
+    public void continueGameAfterWin() {
+        time = maxTime;
+
+        System.out.println("continue after win");
+        pnlIcon.remove(this.graphicsPanel);
+        this.level++;
+        graphicsPanel = new ButtonEvent(this, row, col);
+        graphicsPanel.setScore(Integer.parseInt(this.lblScore.getText()));
+        graphicsPanel.setLevel(this.level);
+        System.out.println("level: " + graphicsPanel.getLevel());
+        pnlIcon.add(graphicsPanel);//, BorderLayout.CENTER
+        pnlIcon.validate();
+        pnlIcon.setVisible(true);
+        lblScore.setText(String.valueOf(graphicsPanel.getScore()));
+        lblLevel.setText(String.valueOf(level));
+    }
+
     @Override
     public void run() {
-     
+
         while (true) {
             try {
                 Thread.sleep(1000);
@@ -391,7 +455,14 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         }
     }
 
-
+    public boolean showDialogNewGame() {
+        pause = true;
+        resume = false;
+        newLevellLbl.setText("VERY GOOD! YOU WON LEVEL " + this.level);
+        playNextDialog.setBounds(400, 300, 400, 300);
+        playNextDialog.setVisible(true);
+        return true;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Menubtn;
     private javax.swing.JButton exitBtn;
@@ -404,9 +475,12 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel lblLevel;
     public javax.swing.JLabel lblScore;
     public javax.swing.JLabel lblSwap;
+    private javax.swing.JLabel newLevellLbl;
     private javax.swing.JDialog pauseDialog;
     private javax.swing.JProgressBar pgbTime;
-    private javax.swing.JPanel pnlIcon;
+    private javax.swing.JButton playNextBtn;
+    private javax.swing.JDialog playNextDialog;
+    public javax.swing.JPanel pnlIcon;
     private javax.swing.JButton restartBtn;
     private javax.swing.JButton resumeBtn;
     // End of variables declaration//GEN-END:variables
