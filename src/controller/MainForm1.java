@@ -23,8 +23,11 @@ import javax.swing.UIManager;
  */
 public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
-    private int row = 8; //8
-    private int col = 8;//8
+    private int row = 2; //8
+    private int col = 2;//8
+    private final int beginRow = 2; //8
+    private final int beginCol = 2;//8
+    private final int beginLevel=1;
     public ButtonEvent graphicsPanel;
     private boolean pause = false;
     private boolean resume = false;
@@ -32,6 +35,23 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     public int time = maxTime;
     public int swap = 5;
     public int score = 0;
+    private int level = 1;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     /**
      * Creates new form MainForm
@@ -42,7 +62,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         lblSwap.setText("" + swap);
         lblScore.setText("" + score);
         createGraphicsPanel();
-   pgbTime.setStringPainted(true);
+        pgbTime.setStringPainted(true);
         pgbTime.setForeground(Color.blue);
     }
 
@@ -76,6 +96,16 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         Menubtn = new javax.swing.JButton();
         restartBtn = new javax.swing.JButton();
         exitBtn = new javax.swing.JButton();
+        playNextDialog = new javax.swing.JDialog();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        playAgainDialog = new javax.swing.JDialog();
+        jLabel8 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         pnlIcon = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pgbTime = new javax.swing.JProgressBar();
@@ -126,6 +156,52 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
             }
         });
         pauseDialog.getContentPane().add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 70, -1));
+
+        playNextDialog.setUndecorated(true);
+        playNextDialog.setResizable(false);
+        playNextDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton3.setText("Main Menu");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        playNextDialog.getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 100, 50));
+
+        jButton4.setText("Play Next");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        playNextDialog.getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 100, 50));
+
+        jLabel6.setText("Very good");
+        playNextDialog.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 210, 50));
+        playNextDialog.getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
+
+        playAgainDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel8.setText("Congratulation!!You are the winner...");
+        playAgainDialog.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 290, 50));
+
+        jButton5.setText("Main Menu");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        playAgainDialog.getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 100, 50));
+
+        jButton6.setText("Play Again");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        playAgainDialog.getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 100, 50));
+        playAgainDialog.getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -225,6 +301,8 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
             pauseDialog.setVisible(true);
 
         }
+//        showDialogNewGame();
+//        showDialogPlayAgainGame();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void resumeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resumeBtnActionPerformed
@@ -268,6 +346,37 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         saveData();
         System.exit(0);
     }//GEN-LAST:event_exitBtnActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        continueGameAfterWin();
+
+        playNextDialog.setVisible(false);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        NewJFrame frame = new NewJFrame();
+//        saveData();
+        frame.setVisible(true);
+        this.setVisible(false);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        NewJFrame frame = new NewJFrame();
+//        saveData();
+        frame.setVisible(true);
+        this.setVisible(false);
+        playAgainDialog.setVisible(false);
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        newGame();
+        playAgainDialog.setVisible(false);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,17 +427,53 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     public void newGame() {
         swap = 5;//// new game them swap
         lblSwap.setText("" + swap);// new game them swap
+        this.row=beginRow;
+        this.col=beginCol;
+        this.level=1;
+        this.graphicsPanel.setLevel(1);
+        lblLevel.setText("1");
         time = maxTime;
+        
         graphicsPanel.removeAll();
+        graphicsPanel.setVisible(false);
         createGraphicsPanel();
         pnlIcon.validate();
         pnlIcon.setVisible(true);
         lblScore.setText("0");
+        System.out.println("level: " + this.graphicsPanel.getLevel());
+        ///
+
+        
+       
+        
+    }
+
+    public void continueGameAfterWin() {
+        time = maxTime;
+
+        System.out.println("continue after win");
+//        createGraphicsPanel();
+//        jLabel6.setText("Very good. You won level :" + this.level);
+        pnlIcon.remove(this.graphicsPanel);
+
+        this.level++;
+        System.out.println("level....: " + this.level);
+        this.row += 2;
+        this.col += 2;
+        graphicsPanel = new ButtonEvent(this, row, col);
+        graphicsPanel.setScore(Integer.valueOf(this.lblScore.getText()));
+        graphicsPanel.setLevel(this.level);
+        System.out.println("level: " + graphicsPanel.getLevel());
+        pnlIcon.add(graphicsPanel);//, BorderLayout.CENTER
+        pnlIcon.validate();
+        pnlIcon.setVisible(true);
+        lblScore.setText(String.valueOf(graphicsPanel.getScore()));
+        lblLevel.setText(String.valueOf(level));
     }
 
     @Override
     public void run() {
-     
+
         while (true) {
             try {
                 Thread.sleep(1000);
@@ -391,21 +536,48 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         }
     }
 
+    public boolean showDialogNewGame() {
+        pause = true;
+        resume = false;
+        jLabel6.setText("VERY GOOD! YOU WON LEVEL "+this.level);
+        playNextDialog.setBounds(400, 300, 400, 300);
+        playNextDialog.setVisible(true);
+        return true;
+    }
+
+    public boolean showDialogPlayAgainGame() {
+        pause = true;
+        resume = false;
+        playAgainDialog.setBounds(400, 300, 400, 300);
+        playAgainDialog.setVisible(true);
+        return true;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Menubtn;
     private javax.swing.JButton exitBtn;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel lblLevel;
     public javax.swing.JLabel lblScore;
     public javax.swing.JLabel lblSwap;
     private javax.swing.JDialog pauseDialog;
     private javax.swing.JProgressBar pgbTime;
+    private javax.swing.JDialog playAgainDialog;
+    private javax.swing.JDialog playNextDialog;
     private javax.swing.JPanel pnlIcon;
     private javax.swing.JButton restartBtn;
     private javax.swing.JButton resumeBtn;

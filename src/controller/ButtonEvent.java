@@ -49,6 +49,24 @@ public class ButtonEvent extends JPanel implements ActionListener {
     private MainForm1 frame;
     private Color backGroundColor = Color.lightGray;
     private int item;
+    private int level=1;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+    
 
     public ButtonEvent(MainForm1 frame, int row, int col) {
         this.frame = frame;
@@ -256,10 +274,14 @@ public class ButtonEvent extends JPanel implements ActionListener {
             p1 = null;
             p2 = null;
             System.out.println("done");
-            if (item == 0) {
+            if (item == 0 && this.level<3) {
 
-                if (frame.showDialogNewGame(
-                        "You are winer!\nDo you want play again?", "Win", 1) == true) {
+                if (frame.showDialogNewGame() == true) {
+
+                };
+            }
+            else if(item == 0 && this.level==3){
+                if (frame.showDialogPlayAgainGame() == true) {
 
                 };
             }
