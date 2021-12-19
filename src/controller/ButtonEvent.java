@@ -44,7 +44,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
     private JButton[][] btn;
     private Point p1 = null;
     private Point p2 = null;
-    private Controller algorithm;
+    public Controller algorithm;
     private PointLine line;
     private MainForm1 frame;
     private Color backGroundColor = Color.lightGray;
@@ -112,7 +112,6 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
     }
 
     private void addArrayButton() {
-        algorithm.listIcon.clear();
         this.removeAll();
         btn = new JButton[row][col];
         for (int i = 1; i < row - 1; i++) {
@@ -120,7 +119,6 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
                 if (algorithm.getMatrix()[i][j] != 0) {
                     btn[i][j] = createButton(i + "," + j);
                     Icon icon = getIcon(algorithm.getMatrix()[i][j]);
-                    algorithm.listIcon.add(algorithm.getMatrix()[i][j]);
                     btn[i][j].setIcon(icon);
                     add(btn[i][j]);
                 } else {
@@ -175,7 +173,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
     }
 
     public void setResume(ArrayList<Integer> arr) { // ??
-       int k = 0;
+        int k = 0;
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 algorithm.getMatrix()[i][j] = arr.get(k);
@@ -184,6 +182,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
         }
         addArrayButton();
     }
+
     public void saveMap() {
         try {
             //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
@@ -297,7 +296,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
                         if (algorithm.getListIcon().get(i) == iconRemove) {
                             System.out.println(i);
                             algorithm.getListIcon().remove(i);
-                            algorithm.getListIcon().remove(i);
+                            algorithm.getListIcon().remove(i++);
                             break;
                         }
                     }
@@ -322,9 +321,8 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
                         if (algorithm.getListIcon().get(i) == iconRemove) {
                             System.out.println(i);
                             algorithm.getListIcon().remove(i);
-                            algorithm.getListIcon().remove(i);
-                            algorithm.listIndexRemove.add(p1);
-                            algorithm.listIndexRemove.add(p2);
+                            algorithm.getListIcon().remove(i++);
+
                             break;
                         }
                     }
@@ -354,8 +352,11 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
             p1 = null;
             p2 = null;
             System.out.println("done");
-            if (algorithm.isEmty()) {
+            if (algorithm.isEmty() && level < 5) {
                 frame.showDialogNewGame();
+                close();
+            } else if (algorithm.isEmty() && this.level == 5) {
+                frame.showDialogPlayAgainGame();
                 close();
             }
         }

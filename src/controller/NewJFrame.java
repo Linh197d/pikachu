@@ -173,7 +173,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     i++;
                 }
             }
-          
+
             int time = 0;
             File t = new File("saveTime.txt");
             FileReader rt = new FileReader(t);
@@ -218,11 +218,18 @@ public class NewJFrame extends javax.swing.JFrame {
             MainForm1 form = new MainForm1(score, swap, level);
 //            form.removeAll();
             form.graphicsPanel.setResume(arr);
+            form.graphicsPanel.algorithm.listIcon.clear();
+            for (int i = 0; i < arr.size(); i++) {
+                if (arr.get(i) != 0) {
+                    form.graphicsPanel.algorithm.listIcon.add(arr.get(i));
+                }
+            }
             form.time = time;
             form.score = score;
             form.swap = swap;
             form.level = level;
             System.out.println("level:" + level);
+
             form.graphicsPanel.score = score;
             this.setVisible(false);
             form.setVisible(true);

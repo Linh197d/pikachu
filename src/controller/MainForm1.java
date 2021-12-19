@@ -84,7 +84,9 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         playNextBtn = new javax.swing.JButton();
         newLevellLbl = new javax.swing.JLabel();
         winDialog = new javax.swing.JDialog();
-        jLabel5 = new javax.swing.JLabel();
+        winLable = new javax.swing.JLabel();
+        playAgainBtn = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
         pnlIcon = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pgbTime = new javax.swing.JProgressBar();
@@ -180,23 +182,63 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
                 .addContainerGap(173, Short.MAX_VALUE))
         );
 
-        jLabel5.setText("you win");
+        winDialog.setMinimumSize(new java.awt.Dimension(300, 300));
+        winDialog.setModal(true);
+        winDialog.setUndecorated(true);
+        winDialog.setResizable(false);
+        winDialog.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                winDialogMouseMoved(evt);
+            }
+        });
+        winDialog.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                winDialogComponentShown(evt);
+            }
+        });
+
+        winLable.setText("you win");
+
+        playAgainBtn.setText("play again");
+        playAgainBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playAgainBtnActionPerformed(evt);
+            }
+        });
+
+        exitButton.setText("exit");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout winDialogLayout = new javax.swing.GroupLayout(winDialog.getContentPane());
         winDialog.getContentPane().setLayout(winDialogLayout);
         winDialogLayout.setHorizontalGroup(
             winDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(winDialogLayout.createSequentialGroup()
-                .addGap(152, 152, 152)
-                .addComponent(jLabel5)
-                .addContainerGap(210, Short.MAX_VALUE))
+                .addGroup(winDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(winDialogLayout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(winLable))
+                    .addGroup(winDialogLayout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(playAgainBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78)
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         winDialogLayout.setVerticalGroup(
             winDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(winDialogLayout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addComponent(jLabel5)
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addComponent(winLable)
+                .addGap(57, 57, 57)
+                .addGroup(winDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(playAgainBtn)
+                    .addComponent(exitButton))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -361,6 +403,30 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         playNextDialog.setLocationRelativeTo(pnlIcon);
     }//GEN-LAST:event_playNextDialogMouseMoved
 
+    private void playAgainBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playAgainBtnActionPerformed
+        graphicsPanel.close();
+        newGame();
+        graphicsPanel.closeThread = false;
+        pause = !pause;
+        winDialog.setVisible(false);
+    }//GEN-LAST:event_playAgainBtnActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void winDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_winDialogComponentShown
+        // TODO add your handling code here:
+
+        winDialog.setLocationRelativeTo(pnlIcon);
+    }//GEN-LAST:event_winDialogComponentShown
+
+    private void winDialogMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_winDialogMouseMoved
+        // TODO add your handling code here:
+        winDialog.setLocationRelativeTo(pnlIcon);
+    }//GEN-LAST:event_winDialogMouseMoved
+
     /**
      * @param args the command line arguments
      */
@@ -515,27 +581,37 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         playNextDialog.setVisible(true);
         return true;
     }
+
+    public boolean showDialogPlayAgainGame() {
+        pause = true;
+        resume = false;
+        winDialog.setBounds(400, 300, 400, 300);
+        winDialog.setVisible(true);
+        return true;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Menubtn;
     private javax.swing.JButton exitBtn;
+    private javax.swing.JButton exitButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lblLevel;
     public javax.swing.JLabel lblScore;
     public javax.swing.JLabel lblSwap;
     private javax.swing.JLabel newLevellLbl;
     private javax.swing.JDialog pauseDialog;
     private javax.swing.JProgressBar pgbTime;
+    private javax.swing.JButton playAgainBtn;
     private javax.swing.JButton playNextBtn;
     private javax.swing.JDialog playNextDialog;
     public javax.swing.JPanel pnlIcon;
     private javax.swing.JButton restartBtn;
     private javax.swing.JButton resumeBtn;
-    private javax.swing.JDialog winDialog;
+    public javax.swing.JDialog winDialog;
+    private javax.swing.JLabel winLable;
     // End of variables declaration//GEN-END:variables
 }
