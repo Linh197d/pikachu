@@ -292,11 +292,14 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
                     int iconRemove = algorithm.getMatrix()[p1.x][p1.y]; // remove icon ra khoi mang list Icon
                     System.out.println("line != null");
                     for (int i = 0; i < algorithm.getListIcon().size(); i++) {  // remove icon ra khoi mang list Icon
-
                         if (algorithm.getListIcon().get(i) == iconRemove) {
-                            System.out.println(i);
-                            algorithm.getListIcon().remove(i);
-                            algorithm.getListIcon().remove(i++);
+                            algorithm.listIcon.remove(i);
+                            break;
+                        }
+                    }
+                     for (int i = 0; i < algorithm.getListIcon().size(); i++) {  // remove icon ra khoi mang list Icon
+                        if (algorithm.getListIcon().get(i) == iconRemove) {
+                            algorithm.listIcon.remove(i);
                             break;
                         }
                     }
@@ -317,12 +320,14 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
                     int iconRemove = algorithm.getMatrix()[p1.x][p1.y]; // remove icon ra khoi mang list Icon
                     System.out.println("line != null");
                     for (int i = 0; i < algorithm.getListIcon().size(); i++) {  // remove icon ra khoi mang list Icon
-
                         if (algorithm.getListIcon().get(i) == iconRemove) {
-                            System.out.println(i);
-                            algorithm.getListIcon().remove(i);
-                            algorithm.getListIcon().remove(i++);
-
+                            algorithm.listIcon.remove(i);
+                            break;
+                        }
+                    }
+                    for (int i = 0; i < algorithm.getListIcon().size(); i++) {  // remove icon ra khoi mang list Icon
+                        if (algorithm.getListIcon().get(i) == iconRemove) {
+                            algorithm.listIcon.remove(i);
                             break;
                         }
                     }

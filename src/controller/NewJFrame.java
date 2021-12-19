@@ -224,6 +224,11 @@ public class NewJFrame extends javax.swing.JFrame {
                     form.graphicsPanel.algorithm.listIcon.add(arr.get(i));
                 }
             }
+            System.out.print("listIcon:");
+            for (int i = 0; i < form.graphicsPanel.algorithm.listIcon.size(); i++) {
+
+                System.out.print(form.graphicsPanel.algorithm.listIcon.get(i) + "  ");
+            }
             form.time = time;
             form.score = score;
             form.swap = swap;

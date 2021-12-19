@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-//import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.index;
 
 /**
  *
@@ -24,8 +23,8 @@ import javax.swing.UIManager;
  */
 public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
-    private int row = 8; //8
-    private int col = 8;//8
+    private int row = 4; //8
+    private int col = 4;//8
     public ButtonEvent graphicsPanel;
     private boolean pause = false;
     private boolean resume = false;
