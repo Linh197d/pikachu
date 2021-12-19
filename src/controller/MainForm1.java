@@ -11,6 +11,8 @@ import java.io.FileWriter;
 import java.io.IOException; // lib file
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,8 +25,8 @@ import javax.swing.UIManager;
  */
 public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
-    private int row = 4; //8
-    private int col = 4;//8
+    private int row = 12; //8
+    private int col = 12;//8
     public ButtonEvent graphicsPanel;
     private boolean pause = false;
     private boolean resume = false;
@@ -52,7 +54,6 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         lblSwap.setText("" + swap);
         lblScore.setText("" + score);
         lblLevel.setText("" + level);
-
         createGraphicsPanel();
         graphicsPanel.level = level;
     }
@@ -260,13 +261,13 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
         pnlIcon.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         pnlIcon.setLayout(new java.awt.GridBagLayout());
-        getContentPane().add(pnlIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 600, 470));
+        getContentPane().add(pnlIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 640, 490));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Screenshot 2021-12-13 233159.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 130));
 
         pgbTime.setOrientation(SwingConstants.VERTICAL);
-        getContentPane().add(pgbTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 131, 23, 480));
+        getContentPane().add(pgbTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 23, 490));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -439,34 +440,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     }
 
     public static void main1(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(() -> {
         MainForm1 form = new MainForm1();
         form.setVisible(true);
         new Thread((Runnable) form).start();
@@ -550,15 +524,15 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 //        this.resume = resume;
 //    }
     public boolean showDialogNewGame(String message, String title, int t) {
-        pause = true;
-        resume = false;
 
         int select = JOptionPane.showOptionDialog(null, message, title,
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 null, null);
         if (select == 0) {
-            pause = false;
+            graphicsPanel.close();
             newGame();
+            graphicsPanel.closeThread = false;
+            pause = !pause;
             return true;
         } else {
             if (t == 1) {

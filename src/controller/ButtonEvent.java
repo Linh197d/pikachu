@@ -38,7 +38,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
     private static final long serialVersionUID = 1L;
     private int row;
     private int col;
-    private int bound = 2;
+    private int bound = 1;
     private int size = 38;
     public int score = 0;
     private JButton[][] btn;
@@ -52,7 +52,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
     public int timeHandle;
     public int level = 1;
     boolean closeThread = false;
-
+    public int[] higScore = new int[5];
     public int getScore() {
         return score;
     }
@@ -297,7 +297,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
                             break;
                         }
                     }
-                     for (int i = 0; i < algorithm.getListIcon().size(); i++) {  // remove icon ra khoi mang list Icon
+                    for (int i = 0; i < algorithm.getListIcon().size(); i++) {  // remove icon ra khoi mang list Icon
                         if (algorithm.getListIcon().get(i) == iconRemove) {
                             algorithm.listIcon.remove(i);
                             break;

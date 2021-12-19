@@ -36,7 +36,6 @@ public class NewJFrame extends javax.swing.JFrame {
         btnContinue = new javax.swing.JButton();
         btnHowToPlay = new javax.swing.JButton();
         btnNewGame = new javax.swing.JButton();
-        btnHighScore = new javax.swing.JButton();
         btnAboutUs = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -116,16 +115,6 @@ public class NewJFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btnNewGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 140, 41));
 
-        btnHighScore.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnHighScore.setText("HIGH SCORE");
-        btnHighScore.setPreferredSize(new java.awt.Dimension(120, 25));
-        btnHighScore.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHighScoreActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnHighScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, 140, 41));
-
         btnAboutUs.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnAboutUs.setText("ABOUT US");
         btnAboutUs.setPreferredSize(new java.awt.Dimension(120, 25));
@@ -134,7 +123,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 btnAboutUsActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAboutUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 520, 140, 41));
+        jPanel1.add(btnAboutUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 440, 140, 41));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 50)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 255, 255));
@@ -144,7 +133,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/hinh-nen-ve-pokemon_035416345.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-5, 0, 780, 610));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -20, 780, 610));
 
         getContentPane().add(jPanel1, "card2");
 
@@ -260,10 +249,6 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHowToPlayActionPerformed
 
-    private void btnHighScoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHighScoreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnHighScoreActionPerformed
-
     private void btnAboutUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutUsActionPerformed
         // TODO add your handling code here:
 
@@ -323,7 +308,6 @@ public class NewJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAboutUs;
     private javax.swing.JButton btnContinue;
-    private javax.swing.JButton btnHighScore;
     private javax.swing.JButton btnHowToPlay;
     private javax.swing.JButton btnNewGame;
     private javax.swing.JDialog continueDialog;

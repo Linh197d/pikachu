@@ -271,8 +271,8 @@ public class Controller {
         }
 
         Random rand = new Random();
-        int imgCount = 32;
-        int max = 8;//imgCount / 2
+        int imgCount = 21;
+        int max = 14;//imgCount / 2
         int[] arr = new int[imgCount + 1];
         ArrayList<Point> listPoint = new ArrayList<Point>();
         for (int i = 1; i < row - 1; i++) {
