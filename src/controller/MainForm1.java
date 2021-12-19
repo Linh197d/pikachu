@@ -24,8 +24,8 @@ import javax.swing.UIManager;
  */
 public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
-    private int row = 4; //8
-    private int col = 4;//8
+    private int row = 8; //8
+    private int col = 8;//8
     public ButtonEvent graphicsPanel;
     private boolean pause = false;
     private boolean resume = false;
