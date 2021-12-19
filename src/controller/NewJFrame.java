@@ -154,6 +154,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void btnContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinueActionPerformed
         ArrayList<Integer> arr = new ArrayList<>();
+//     
         try {
             //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
             File f = new File("saveMap.txt");
@@ -172,7 +173,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     i++;
                 }
             }
-
+          
             int time = 0;
             File t = new File("saveTime.txt");
             FileReader rt = new FileReader(t);
@@ -214,17 +215,17 @@ public class NewJFrame extends javax.swing.JFrame {
 //                System.out.print("score" + score);
 
             }
-
-            MainForm1 form = new MainForm1(score, swap,level);
+            MainForm1 form = new MainForm1(score, swap, level);
 //            form.removeAll();
             form.graphicsPanel.setResume(arr);
             form.time = time;
             form.score = score;
             form.swap = swap;
+            form.level = level;
+            System.out.println("level:" + level);
             form.graphicsPanel.score = score;
             this.setVisible(false);
             form.setVisible(true);
-//            System.out.println(arr.get(18));
             new Thread((Runnable) form).start();
             fr.close();
             br.close();

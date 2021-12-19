@@ -50,7 +50,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
     private Color backGroundColor = Color.lightGray;
     private int item;
     public int timeHandle;
-    private int level = 1;
+    public int level = 1;
     boolean closeThread = false;
 
     public int getScore() {
@@ -93,23 +93,6 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
 
     }
 
-    public void isLv6() {
-        if (level == 6 && !algorithm.isFull()) {
-            for (int i = 1; i < row - 1; i++) {
-                for (int j = 1; j < col - 1; j++) {
-                    setDisable(btn[i][j]);
-                }
-            }
-            frame.pnlIcon.removeAll();
-            algorithm.newLevel(p1, p2, level);
-            algorithm.showMatrix();
-            frame.pnlIcon.remove(this);
-            addArrayButton();
-            frame.pnlIcon.add(this);
-        }
-
-    }
-
     @Override
     public void run() {
         while (!closeThread) {
@@ -129,6 +112,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
     }
 
     private void addArrayButton() {
+        algorithm.listIcon.clear();
         this.removeAll();
         btn = new JButton[row][col];
         for (int i = 1; i < row - 1; i++) {
@@ -136,6 +120,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
                 if (algorithm.getMatrix()[i][j] != 0) {
                     btn[i][j] = createButton(i + "," + j);
                     Icon icon = getIcon(algorithm.getMatrix()[i][j]);
+                    algorithm.listIcon.add(algorithm.getMatrix()[i][j]);
                     btn[i][j].setIcon(icon);
                     add(btn[i][j]);
                 } else {
@@ -189,10 +174,9 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
         btn.setEnabled(false);
     }
 
-    public void setResume(ArrayList<Integer> arr) {
-        int k = 0;
-
-        for (int i = 0; i < col; i++) {
+    public void setResume(ArrayList<Integer> arr) { // ??
+       int k = 0;
+        for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 algorithm.getMatrix()[i][j] = arr.get(k);
                 k++;
@@ -200,7 +184,6 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
         }
         addArrayButton();
     }
-
     public void saveMap() {
         try {
             //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
@@ -371,7 +354,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
             p1 = null;
             p2 = null;
             System.out.println("done");
-            if (item == 0) {
+            if (algorithm.isEmty()) {
                 frame.showDialogNewGame();
                 close();
             }
