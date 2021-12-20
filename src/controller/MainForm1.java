@@ -10,12 +10,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException; // lib file
 import java.awt.Color;
+import static java.awt.Color.gray;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-//import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.index;
 
 /**
  *
@@ -23,8 +26,8 @@ import javax.swing.UIManager;
  */
 public class MainForm1 extends javax.swing.JFrame implements Runnable {
 
-    private int row = 8; //8
-    private int col = 8;//8
+    private int row = 12; //8
+    private int col = 12;//8
     public ButtonEvent graphicsPanel;
     private boolean pause = false;
     private boolean resume = false;
@@ -32,6 +35,7 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     public int time = maxTime;
     public int swap = 5;
     public int score = 0;
+    public int level = 1;
 
     /**
      * Creates new form MainForm
@@ -41,23 +45,24 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         pauseDialog.setLocationRelativeTo(pnlIcon);// set pause dialog center
         lblSwap.setText("" + swap);
         lblScore.setText("" + score);
+        lblLevel.setText("" + level);
         createGraphicsPanel();
-   pgbTime.setStringPainted(true);
-        pgbTime.setForeground(Color.blue);
     }
 
-    public MainForm1(int score, int swap) {
+    public MainForm1(int score, int swap, int level) {
         initComponents();
 //        pauseDialog.setLocationRelativeTo(pnlIcon);// set pause dialog center
         lblSwap.setText("" + swap);
         lblScore.setText("" + score);
+        lblLevel.setText("" + level);
         createGraphicsPanel();
+        graphicsPanel.level = level;
     }
 
-    private JPanel createGraphicsPanel() {
+    public JPanel createGraphicsPanel() {
         pnlIcon.removeAll();// sau khi new game thi xoa panel cu
         graphicsPanel = new ButtonEvent(this, row, col); // this,row col
-        pnlIcon.setBackground(Color.gray);
+        pnlIcon.setBackground(gray);
         pnlIcon.add(graphicsPanel);
         return pnlIcon;
     }
@@ -72,22 +77,34 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
     private void initComponents() {
 
         pauseDialog = new javax.swing.JDialog();
-        resumeBtn = new javax.swing.JButton();
-        Menubtn = new javax.swing.JButton();
-        restartBtn = new javax.swing.JButton();
-        exitBtn = new javax.swing.JButton();
-        pnlIcon = new javax.swing.JPanel();
+        btnResume = new javax.swing.JLabel();
+        btnRestart = new javax.swing.JLabel();
+        btnMenu = new javax.swing.JLabel();
+        btnExit = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        pgbTime = new javax.swing.JProgressBar();
+        playNextDialog = new javax.swing.JDialog();
+        newLevellLbl = new javax.swing.JLabel();
+        btnNext = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        winDialog = new javax.swing.JDialog();
+        winLable = new javax.swing.JLabel();
+        playagianbtn = new javax.swing.JLabel();
+        exitbtn = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        lblSwap = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblScore = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        lblSwap = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lblLevel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnSwap = new javax.swing.JLabel();
+        pnlIcon = new javax.swing.JPanel();
+        pgbTime = new javax.swing.JProgressBar();
+        btnPause = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
+        pauseDialog.setTitle("Pause");
         pauseDialog.setLocation(new java.awt.Point(0, 0));
         pauseDialog.setMinimumSize(new java.awt.Dimension(500, 500));
         pauseDialog.setModal(true);
@@ -95,39 +112,116 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         pauseDialog.setResizable(false);
         pauseDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        resumeBtn.setText("resume");
-        resumeBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resumeBtnActionPerformed(evt);
+        btnResume.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnRessume.png"))); // NOI18N
+        btnResume.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnResumeMouseClicked(evt);
             }
         });
-        pauseDialog.getContentPane().add(resumeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, 30));
+        pauseDialog.getContentPane().add(btnResume, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 110, 50));
 
-        Menubtn.setText("Menu");
-        Menubtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenubtnActionPerformed(evt);
+        btnRestart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnRestart.png"))); // NOI18N
+        btnRestart.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRestartMouseClicked(evt);
             }
         });
-        pauseDialog.getContentPane().add(Menubtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, -1, -1));
+        pauseDialog.getContentPane().add(btnRestart, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 120, 50));
 
-        restartBtn.setText("restart");
-        restartBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                restartBtnActionPerformed(evt);
+        btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnMenu.png"))); // NOI18N
+        btnMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMenuMouseClicked(evt);
             }
         });
-        pauseDialog.getContentPane().add(restartBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
+        pauseDialog.getContentPane().add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 120, 50));
 
-        exitBtn.setText("exit");
-        exitBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitBtnActionPerformed(evt);
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnExit.png"))); // NOI18N
+        btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnExitMouseClicked(evt);
             }
         });
-        pauseDialog.getContentPane().add(exitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 70, -1));
+        pauseDialog.getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, 110, 50));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Logo-Pokebola-Pokémon-PNG.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        pauseDialog.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 420));
+
+        playNextDialog.setMinimumSize(new java.awt.Dimension(300, 300));
+        playNextDialog.setModal(true);
+        playNextDialog.setUndecorated(true);
+        playNextDialog.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                playNextDialogMouseMoved(evt);
+            }
+        });
+        playNextDialog.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                playNextDialogComponentShown(evt);
+            }
+        });
+        playNextDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        playNextDialog.getContentPane().add(newLevellLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(222, 30, -1, -1));
+
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnNext.png"))); // NOI18N
+        btnNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNextMouseClicked(evt);
+            }
+        });
+        playNextDialog.getContentPane().add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 90, 50));
+
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel6.setText("You won this level !!!");
+        playNextDialog.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 190, 30));
+
+        jLabel5.setBackground(new java.awt.Color(252, 251, 251));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/nextgif.gif"))); // NOI18N
+        playNextDialog.getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 240));
+
+        winDialog.setMinimumSize(new java.awt.Dimension(300, 300));
+        winDialog.setModal(true);
+        winDialog.setUndecorated(true);
+        winDialog.setResizable(false);
+        winDialog.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                winDialogMouseMoved(evt);
+            }
+        });
+        winDialog.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                winDialogComponentShown(evt);
+            }
+        });
+        winDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        winLable.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        winLable.setForeground(new java.awt.Color(255, 255, 255));
+        winLable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/won.gif"))); // NOI18N
+        winDialog.getContentPane().add(winLable, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 10, 370, 60));
+
+        playagianbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/playagain.png"))); // NOI18N
+        playagianbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playagianbtnMouseClicked(evt);
+            }
+        });
+        winDialog.getContentPane().add(playagianbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 130, 50));
+
+        exitbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/exit.png"))); // NOI18N
+        exitbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitbtnMouseClicked(evt);
+            }
+        });
+        winDialog.getContentPane().add(exitbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, -1, 50));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/wingid.gif"))); // NOI18N
+        winDialog.getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -50, -1, 350));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("POKEMON GAME");
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -145,93 +239,113 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnlIcon.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        pnlIcon.setLayout(new java.awt.GridBagLayout());
-        getContentPane().add(pnlIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 600, 470));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Screenshot 2021-12-13 233159.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 130));
-
-        pgbTime.setOrientation(SwingConstants.VERTICAL);
-        getContentPane().add(pgbTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 131, 23, 480));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("SCORE");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 70, 30));
-
-        lblScore.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblScore.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblScore.setText("0");
-        getContentPane().add(lblScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 80, 40));
-
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setText("SWAP");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 73, 31));
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblSwap.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblSwap.setForeground(new java.awt.Color(51, 153, 0));
         lblSwap.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSwap.setText("5");
-        getContentPane().add(lblSwap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 63, 30));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("SCORE");
+
+        lblScore.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblScore.setForeground(new java.awt.Color(255, 255, 0));
+        lblScore.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblScore.setText("0");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("LEVEL");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 60, -1));
 
         lblLevel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblLevel.setForeground(new java.awt.Color(204, 0, 0));
         lblLevel.setText("1");
-        getContentPane().add(lblLevel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(255, 204, 0));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setText("PAUSE");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        btnSwap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnSwap.png"))); // NOI18N
+        btnSwap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSwapMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSwapMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSwapMouseExited(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(445, 40, 110, 30));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/hinh-nen-pokemon-chibi_035414814.jpg"))); // NOI18N
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSwap))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(lblLevel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblSwap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblScore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel4)
+                .addGap(29, 29, 29)
+                .addComponent(lblLevel)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblScore, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
+                .addComponent(btnSwap, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSwap)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 100, 340));
+
+        pnlIcon.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        pnlIcon.setLayout(new java.awt.GridBagLayout());
+        getContentPane().add(pnlIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 630, 500));
+
+        pgbTime.setOrientation(SwingConstants.VERTICAL);
+        getContentPane().add(pgbTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, 30, 500));
+
+        btnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnPause.png"))); // NOI18N
+        btnPause.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPauseMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnPauseMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnPauseMouseExited(evt);
+            }
+        });
+        getContentPane().add(btnPause, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 570, 140, 60));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/hinh-nen-the-gioi-pokemon_035416267 (2).jpg"))); // NOI18N
         jLabel3.setText("jLabel3");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 620));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 940, 660));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (swap > 0) {
-            graphicsPanel.changePosition();
-            swap--;
-            lblSwap.setText("" + swap);
-        }
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (isPause()) {
-            pause = false;
-            pauseDialog.setVisible(false);
-
-        } else {
-            pause = true;
-            pauseDialog.setVisible(true);
-
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void resumeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resumeBtnActionPerformed
-        // TODO add your handling code here:
-        pauseDialog.setVisible(false);
-        pause = !pause;
-    }//GEN-LAST:event_resumeBtnActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
@@ -243,31 +357,127 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         saveData();
     }//GEN-LAST:event_formWindowClosing
 
-    private void MenubtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenubtnActionPerformed
-        NewJFrame menu = new NewJFrame();
-        saveData();
-        pauseDialog.setVisible(false);
-        menu.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_MenubtnActionPerformed
-
     private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
         // TODO add your handling code here:
         pauseDialog.setLocationRelativeTo(pnlIcon);
     }//GEN-LAST:event_formComponentMoved
 
-    private void restartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartBtnActionPerformed
-        //ODO add your handling code here: T
+    private void playNextDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_playNextDialogComponentShown
+        // TODO add your handling code here:
+        playNextDialog.setLocationRelativeTo(pnlIcon);
+    }//GEN-LAST:event_playNextDialogComponentShown
+
+    private void playNextDialogMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playNextDialogMouseMoved
+        // TODO add your handling code here:
+        playNextDialog.setLocationRelativeTo(pnlIcon);
+    }//GEN-LAST:event_playNextDialogMouseMoved
+
+    private void winDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_winDialogComponentShown
+        // TODO add your handling code here:
+
+        winDialog.setLocationRelativeTo(pnlIcon);
+    }//GEN-LAST:event_winDialogComponentShown
+
+    private void winDialogMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_winDialogMouseMoved
+        // TODO add your handling code here:
+        winDialog.setLocationRelativeTo(pnlIcon);
+    }//GEN-LAST:event_winDialogMouseMoved
+
+    private void btnPauseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPauseMouseClicked
+        // TODO add your handling code here:
+if (isPause()) {
+            pause = false;
+            pauseDialog.setVisible(false);
+
+        } else {
+            pause = true;
+            pauseDialog.setVisible(true);
+
+        }
+
+    }//GEN-LAST:event_btnPauseMouseClicked
+
+    private void btnSwapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSwapMouseClicked
+        // TODO add your handling code here:
+if (swap > 0) {
+            graphicsPanel.changePosition();
+            swap--;
+            lblSwap.setText("" + swap);
+        }
+    }//GEN-LAST:event_btnSwapMouseClicked
+
+    private void btnPauseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPauseMouseEntered
+        // TODO add your handling code here:
+btnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnPause1.png")));
+    }//GEN-LAST:event_btnPauseMouseEntered
+
+    private void btnPauseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPauseMouseExited
+        // TODO add your handling code here:
+btnPause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnPause.png")));
+    }//GEN-LAST:event_btnPauseMouseExited
+
+    private void btnSwapMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSwapMouseEntered
+        // TODO add your handling code here:
+btnSwap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnSwap1.png")));
+    }//GEN-LAST:event_btnSwapMouseEntered
+
+    private void btnSwapMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSwapMouseExited
+        // TODO add your handling code here:
+btnSwap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnSwap.png")));
+    }//GEN-LAST:event_btnSwapMouseExited
+
+    private void btnResumeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResumeMouseClicked
+        // TODO add your handling code here:
+pauseDialog.setVisible(false);
+        pause = !pause;
+    }//GEN-LAST:event_btnResumeMouseClicked
+
+    private void btnRestartMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRestartMouseClicked
+        // TODO add your handling code here:
+graphicsPanel.close();
+
         newGame();
+        graphicsPanel.closeThread = false;
         pause = !pause;
         pauseDialog.setVisible(false);
-    }//GEN-LAST:event_restartBtnActionPerformed
+    }//GEN-LAST:event_btnRestartMouseClicked
 
-    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+    private void btnMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuMouseClicked
         // TODO add your handling code here:
+NewJFrame menu = new NewJFrame();
         saveData();
+        pauseDialog.setVisible(false);
+        graphicsPanel.close();
+        menu.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnMenuMouseClicked
+
+    private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
+        // TODO add your handling code here:
+saveData();
         System.exit(0);
-    }//GEN-LAST:event_exitBtnActionPerformed
+    }//GEN-LAST:event_btnExitMouseClicked
+
+    private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
+        // TODO add your handling code here:
+System.out.print("score:" + score + " swap " + swap);
+        continueGameAfterWin();
+        playNextDialog.setVisible(false); 
+    }//GEN-LAST:event_btnNextMouseClicked
+
+    private void playagianbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playagianbtnMouseClicked
+        // TODO add your handling code here:
+graphicsPanel.close();
+        newGame();
+        graphicsPanel.closeThread = false;
+        pause = !pause;
+        winDialog.setVisible(false);
+    }//GEN-LAST:event_playagianbtnMouseClicked
+
+    private void exitbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitbtnMouseClicked
+        // TODO add your handling code here:
+System.exit(0);
+    }//GEN-LAST:event_exitbtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -278,37 +488,11 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         graphicsPanel.saveScore();
         graphicsPanel.saveSwap(swap);
         graphicsPanel.saveTime(time);
+        graphicsPanel.saveLevel(level);
     }
 
     public static void main1(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainForm1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(() -> {
         MainForm1 form = new MainForm1();
         form.setVisible(true);
         new Thread((Runnable) form).start();
@@ -319,16 +503,39 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         swap = 5;//// new game them swap
         lblSwap.setText("" + swap);// new game them swap
         time = maxTime;
+        level = 1;
         graphicsPanel.removeAll();
         createGraphicsPanel();
         pnlIcon.validate();
         pnlIcon.setVisible(true);
         lblScore.setText("0");
+        lblLevel.setText("1");
+    }
+
+    public void continueGameAfterWin() {
+        int newScore = graphicsPanel.getScore();
+        int newSwap = swap;
+        int newLevel = ++level;
+        System.out.println(newScore);
+        graphicsPanel.close();
+        newGame();
+        graphicsPanel.closeThread = false;
+
+        swap = newSwap;
+        score = newScore;
+        pause = !pause;
+        level = newLevel;
+        graphicsPanel.setScore(score);
+        graphicsPanel.setLevel(this.level);
+        lblSwap.setText("" + swap);// new game them sw
+        lblLevel.setText("" + level);
+        lblScore.setText("" + score);
+
     }
 
     @Override
     public void run() {
-     
+
         while (true) {
             try {
                 Thread.sleep(1000);
@@ -369,15 +576,15 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
 //        this.resume = resume;
 //    }
     public boolean showDialogNewGame(String message, String title, int t) {
-        pause = true;
-        resume = false;
 
         int select = JOptionPane.showOptionDialog(null, message, title,
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 null, null);
         if (select == 0) {
-            pause = false;
+            graphicsPanel.close();
             newGame();
+            graphicsPanel.closeThread = false;
+            pause = !pause;
             return true;
         } else {
             if (t == 1) {
@@ -391,23 +598,49 @@ public class MainForm1 extends javax.swing.JFrame implements Runnable {
         }
     }
 
+    public boolean showDialogNewGame() {
+        pause = true;
+        resume = false;
+        //newLevellLbl.setText("VERY GOOD! YOU WON LEVEL " + this.level);
+        playNextDialog.setBounds(400, 300, 400, 300);
+        playNextDialog.setVisible(true);
+        return true;
+    }
 
+    public boolean showDialogPlayAgainGame() {
+        pause = true;
+        resume = false;
+        winDialog.setBounds(400, 300, 400, 300);
+        winDialog.setVisible(true);
+        return true;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Menubtn;
-    private javax.swing.JButton exitBtn;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel btnExit;
+    private javax.swing.JLabel btnMenu;
+    private javax.swing.JLabel btnNext;
+    private javax.swing.JLabel btnPause;
+    private javax.swing.JLabel btnRestart;
+    private javax.swing.JLabel btnResume;
+    private javax.swing.JLabel btnSwap;
+    private javax.swing.JLabel exitbtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblLevel;
     public javax.swing.JLabel lblScore;
     public javax.swing.JLabel lblSwap;
+    private javax.swing.JLabel newLevellLbl;
     private javax.swing.JDialog pauseDialog;
     private javax.swing.JProgressBar pgbTime;
-    private javax.swing.JPanel pnlIcon;
-    private javax.swing.JButton restartBtn;
-    private javax.swing.JButton resumeBtn;
+    private javax.swing.JDialog playNextDialog;
+    private javax.swing.JLabel playagianbtn;
+    public javax.swing.JPanel pnlIcon;
+    public javax.swing.JDialog winDialog;
+    private javax.swing.JLabel winLable;
     // End of variables declaration//GEN-END:variables
 }
