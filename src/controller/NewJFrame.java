@@ -31,18 +31,30 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         continueDialog = new javax.swing.JDialog();
-        continuelbl = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        dialogHowtoplay = new javax.swing.JDialog();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        aboutUsDialog = new javax.swing.JDialog();
+        jLabel11 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        btnContinue = new javax.swing.JButton();
-        btnHowToPlay = new javax.swing.JButton();
-        btnNewGame = new javax.swing.JButton();
-        btnAboutUs = new javax.swing.JButton();
+        btnNewGame = new javax.swing.JLabel();
+        btnContinue = new javax.swing.JLabel();
+        btnHowtoplay = new javax.swing.JLabel();
+        btnAboutUs = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        continueDialog.setMinimumSize(new java.awt.Dimension(300, 300));
+        continueDialog.setMinimumSize(new java.awt.Dimension(430, 350));
         continueDialog.setModal(true);
-        continueDialog.setUndecorated(true);
+        continueDialog.setPreferredSize(new java.awt.Dimension(800, 600));
         continueDialog.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 continueDialogMouseMoved(evt);
@@ -53,28 +65,56 @@ public class NewJFrame extends javax.swing.JFrame {
                 continueDialogComponentShown(evt);
             }
         });
+        continueDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        continuelbl.setText("chua co du lieu game ");
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/nodata.png"))); // NOI18N
+        continueDialog.getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(-180, 0, 600, 300));
 
-        javax.swing.GroupLayout continueDialogLayout = new javax.swing.GroupLayout(continueDialog.getContentPane());
-        continueDialog.getContentPane().setLayout(continueDialogLayout);
-        continueDialogLayout.setHorizontalGroup(
-            continueDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(continueDialogLayout.createSequentialGroup()
-                .addGap(163, 163, 163)
-                .addComponent(continuelbl)
-                .addContainerGap(130, Short.MAX_VALUE))
-        );
-        continueDialogLayout.setVerticalGroup(
-            continueDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(continueDialogLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(continuelbl)
-                .addContainerGap(262, Short.MAX_VALUE))
-        );
+        dialogHowtoplay.setTitle("How to play");
+        dialogHowtoplay.setBackground(new java.awt.Color(255, 102, 0));
+        dialogHowtoplay.setMinimumSize(new java.awt.Dimension(690, 400));
+        dialogHowtoplay.setModal(true);
+        dialogHowtoplay.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/minhhoa1.jpg"))); // NOI18N
+        dialogHowtoplay.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 220, -1, -1));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/minhhoa2.jpg"))); // NOI18N
+        dialogHowtoplay.getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 220, -1, 83));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/minhhoa3.jpg"))); // NOI18N
+        dialogHowtoplay.getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(301, 220, -1, 83));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/minhhoa4.jpg"))); // NOI18N
+        dialogHowtoplay.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, -1, 83));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/minhha5.jpg"))); // NOI18N
+        dialogHowtoplay.getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(494, 220, -1, 83));
+
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel8.setText("1. Tìm và bấm vào 2 hình giống hệt nhau");
+        dialogHowtoplay.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 26, 662, 41));
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel9.setText("2. Bạn không thể tạo quá 3 đường kết nối giữa chúng như hình  ");
+        dialogHowtoplay.getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 85, 662, 42));
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel10.setText("   minh họa:");
+        dialogHowtoplay.getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 145, 662, 43));
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/backgroundhtp.jpg"))); // NOI18N
+        dialogHowtoplay.getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 400));
+
+        aboutUsDialog.setTitle("About Us");
+        aboutUsDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/ABOUT US (7).gif"))); // NOI18N
+        jLabel11.setText("jLabel11");
+        aboutUsDialog.getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(-150, -100, -1, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(690, 610));
+        setTitle("POKEMON GAME");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -85,51 +125,72 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnContinue.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnContinue.setText("CONTINUE");
-        btnContinue.setPreferredSize(new java.awt.Dimension(120, 25));
-        btnContinue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnContinueActionPerformed(evt);
+        btnNewGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnNewgame.png"))); // NOI18N
+        btnNewGame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNewGameMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNewGameMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnNewGameMouseExited(evt);
             }
         });
-        jPanel1.add(btnContinue, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 270, 140, 41));
+        jPanel1.add(btnNewGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 200, 60));
 
-        btnHowToPlay.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnHowToPlay.setText("HOW TO PLAY");
-        btnHowToPlay.setPreferredSize(new java.awt.Dimension(120, 25));
-        btnHowToPlay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHowToPlayActionPerformed(evt);
+        btnContinue.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnContinue.png"))); // NOI18N
+        btnContinue.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnContinueMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnContinueMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnContinueMouseExited(evt);
             }
         });
-        jPanel1.add(btnHowToPlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 350, 140, 41));
+        jPanel1.add(btnContinue, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 190, 60));
 
-        btnNewGame.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnNewGame.setText("NEW GAME");
-        btnNewGame.setPreferredSize(new java.awt.Dimension(120, 25));
-        btnNewGame.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewGameActionPerformed(evt);
+        btnHowtoplay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnHowtoplay.png"))); // NOI18N
+        btnHowtoplay.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnHowtoplayMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHowtoplayMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHowtoplayMouseExited(evt);
             }
         });
-        jPanel1.add(btnNewGame, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 140, 41));
+        jPanel1.add(btnHowtoplay, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 190, 60));
 
-        btnAboutUs.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnAboutUs.setText("ABOUT US");
-        btnAboutUs.setPreferredSize(new java.awt.Dimension(120, 25));
-        btnAboutUs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAboutUsActionPerformed(evt);
+        btnAboutUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnAboutus.png"))); // NOI18N
+        btnAboutUs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAboutUsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAboutUsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAboutUsMouseExited(evt);
             }
         });
-        jPanel1.add(btnAboutUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 440, 140, 41));
+        jPanel1.add(btnAboutUs, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 420, 200, 60));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 50)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("POKEMON");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 313, -1));
+        jLabel1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentMoved(java.awt.event.ComponentEvent evt) {
+                jLabel1ComponentMoved(evt);
+            }
+        });
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 313, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/hinh-nen-ve-pokemon_035416345.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -141,8 +202,33 @@ public class NewJFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinueActionPerformed
-        ArrayList<Integer> arr = new ArrayList<>();
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+//        form.graphicsPanel.saveMap();
+//        System.out.println("abc");
+    }//GEN-LAST:event_formWindowClosing
+
+    private void continueDialogMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueDialogMouseMoved
+        // TODO add your handling code here:
+        continueDialog.setLocationRelativeTo(this);
+    }//GEN-LAST:event_continueDialogMouseMoved
+
+    private void continueDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_continueDialogComponentShown
+        // TODO add your handling code here:
+        continueDialog.setLocationRelativeTo(this);
+    }//GEN-LAST:event_continueDialogComponentShown
+
+    private void btnNewGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewGameMouseClicked
+        // TODO add your handling code here:
+        MainForm1 form = new MainForm1();
+            form.setVisible(true);
+            this.setVisible(false);
+            new Thread((Runnable) form).start();
+    }//GEN-LAST:event_btnNewGameMouseClicked
+
+    private void btnContinueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnContinueMouseClicked
+        // TODO add your handling code here:
+ArrayList<Integer> arr = new ArrayList<>();
 //     
         try {
             //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
@@ -234,41 +320,67 @@ public class NewJFrame extends javax.swing.JFrame {
             continueDialog.setVisible(true);
             System.out.println("Loi doc file: " + ex);
         }
+    }//GEN-LAST:event_btnContinueMouseClicked
 
-    }//GEN-LAST:event_btnContinueActionPerformed
-
-    private void btnNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewGameActionPerformed
-        MainForm1 form = new MainForm1();
-        form.setVisible(true);
-        this.setVisible(false);
-        new Thread((Runnable) form).start();
-
-    }//GEN-LAST:event_btnNewGameActionPerformed
-
-    private void btnHowToPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHowToPlayActionPerformed
+    private void btnNewGameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewGameMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnHowToPlayActionPerformed
+btnNewGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnNewgame1.png")));
+    }//GEN-LAST:event_btnNewGameMouseEntered
 
-    private void btnAboutUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutUsActionPerformed
+    private void btnNewGameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNewGameMouseExited
         // TODO add your handling code here:
+btnNewGame.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnNewgame.png")));
+    }//GEN-LAST:event_btnNewGameMouseExited
 
-    }//GEN-LAST:event_btnAboutUsActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    private void btnContinueMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnContinueMouseEntered
         // TODO add your handling code here:
-//        form.graphicsPanel.saveMap();
-//        System.out.println("abc");
-    }//GEN-LAST:event_formWindowClosing
+btnContinue.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnContinue1.png")));
+    }//GEN-LAST:event_btnContinueMouseEntered
 
-    private void continueDialogMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueDialogMouseMoved
+    private void btnContinueMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnContinueMouseExited
         // TODO add your handling code here:
-        continueDialog.setLocationRelativeTo(this);
-    }//GEN-LAST:event_continueDialogMouseMoved
+btnContinue.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnContinue.png")));
+    }//GEN-LAST:event_btnContinueMouseExited
 
-    private void continueDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_continueDialogComponentShown
+    private void btnHowtoplayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHowtoplayMouseClicked
         // TODO add your handling code here:
-        continueDialog.setLocationRelativeTo(this);
-    }//GEN-LAST:event_continueDialogComponentShown
+dialogHowtoplay.setVisible(true);
+dialogHowtoplay.setLocationRelativeTo(jPanel1);
+    }//GEN-LAST:event_btnHowtoplayMouseClicked
+
+    private void btnHowtoplayMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHowtoplayMouseEntered
+        // TODO add your handling code here:
+btnHowtoplay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnHowtoplay1.png")));
+    }//GEN-LAST:event_btnHowtoplayMouseEntered
+
+    private void btnHowtoplayMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHowtoplayMouseExited
+        // TODO add your handling code here:
+btnHowtoplay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnHowtoplay.png")));
+    }//GEN-LAST:event_btnHowtoplayMouseExited
+
+    private void btnAboutUsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAboutUsMouseClicked
+        // TODO add your handling code here:
+        aboutUsDialog.setVisible(true);
+        aboutUsDialog.setSize(600,600);
+        aboutUsDialog.setLocationRelativeTo(null);
+                
+    }//GEN-LAST:event_btnAboutUsMouseClicked
+
+    private void btnAboutUsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAboutUsMouseEntered
+        // TODO add your handling code here:
+btnAboutUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnAboutus1.png")));
+    }//GEN-LAST:event_btnAboutUsMouseEntered
+
+    private void btnAboutUsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAboutUsMouseExited
+        // TODO add your handling code here:
+btnAboutUs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/btnAboutus.png")));
+    }//GEN-LAST:event_btnAboutUsMouseExited
+
+    private void jLabel1ComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel1ComponentMoved
+        // TODO add your handling code here:
+dialogHowtoplay.setLocationRelativeTo(jPanel1);
+
+    }//GEN-LAST:event_jLabel1ComponentMoved
 
     /**
      * @param args the command line arguments
@@ -306,14 +418,26 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAboutUs;
-    private javax.swing.JButton btnContinue;
-    private javax.swing.JButton btnHowToPlay;
-    private javax.swing.JButton btnNewGame;
+    private javax.swing.JDialog aboutUsDialog;
+    private javax.swing.JLabel btnAboutUs;
+    private javax.swing.JLabel btnContinue;
+    private javax.swing.JLabel btnHowtoplay;
+    private javax.swing.JLabel btnNewGame;
     private javax.swing.JDialog continueDialog;
-    private javax.swing.JLabel continuelbl;
+    private javax.swing.JDialog dialogHowtoplay;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

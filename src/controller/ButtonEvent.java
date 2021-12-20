@@ -48,7 +48,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
     private PointLine line;
     private MainForm1 frame;
     private Color backGroundColor = Color.lightGray;
-    private int item;
+   // private int item;
     public int timeHandle;
     public int level = 1;
     boolean closeThread = false;
@@ -73,7 +73,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
         this.frame = frame;
         this.row = row + 2;
         this.col = col + 2;
-        item = row * col / 2;
+        //item = row * col / 2;
         setLayout(new GridLayout(row, col, bound, bound));
         setBackground(backGroundColor);//backGroundColor
         setPreferredSize(new Dimension((size + bound) * col, (size + bound)
@@ -348,7 +348,7 @@ public class ButtonEvent extends JPanel implements ActionListener, Runnable {
                 } else {
                     score += 2;
                 }
-                item--;
+                //item--;
                 frame.time++;
                 frame.lblScore.setText(score + "");
                 timeHandle = 0; // xu ly diem 
